@@ -1,6 +1,6 @@
 import React,{Component, useState} from 'react';
 // import {Modal, Button,Row, Col, Form} from 'react-bootstrap';
-import { Form, Input, Modal, Button, Checkbox,  } from 'antd';
+import { Form, Input, Modal, Button, } from 'antd';
 
 export default class AddContractModalAntd extends Component{
     constructor(props){
@@ -8,6 +8,7 @@ export default class AddContractModalAntd extends Component{
         this.handleSubmit=this.handleSubmit.bind(this);
     }
 
+    //POST Запрос добавления контракта
     handleSubmit(event){
         event.preventDefault();
         fetch(process.env.REACT_APP_API+'contract',{
@@ -30,58 +31,19 @@ export default class AddContractModalAntd extends Component{
         })
     }
 
+    // Вывод модального окна добавления Контракта
     render(){
         return(
             <div className="container">
-                <ModalWindow>
-
-                </ModalWindow>
-                
-                
-                {/* <Modal {...this.props} size="lg" aria-labelledby="container-modal-title-vcenter" centered>
-                    
-                    <Modal.Header closeButton>
-                        <Modal.Title id="container-modal-title-vcenter">
-                            AddContract
-                        </Modal.Title>
-                    </Modal.Header>
-
-                    <Modal.Body>
-                        <Row>
-                            <Col sm={6}>
-                                <Form onSubmit={this.handleSubmit}>
-                                    <Form.Group controlId="ShortNameContract">
-                                        <Form.Label>ShortNameContract</Form.Label>
-                                        <Form.Control type="text" name="ShortNameContract" required placeholder="ShortNameContract"/>
-                                    </Form.Group>
-
-                                    <Form.Group controlId="FullNameContract">
-                                        <Form.Label>FullNameContract</Form.Label>
-                                        <Form.Control type="text" name="FullNameContract" required placeholder="FullNameContract"/>
-                                    </Form.Group>
-
-                                    <Form.Group>
-                                        <Button variant="primary" type="submit">
-                                            Add Contract
-                                        </Button>
-                                    </Form.Group>
-                                </Form>
-                            </Col>
-                        </Row>
-                    </Modal.Body>
-
-                    <Modal.Footer>
-                        <Button variant="danger" onClick={this.props.onHide}>Close</Button>
-                    </Modal.Footer>
-                    
-                </Modal> */}
+              
+                <ModalWindow/>
             </div>
         )
     }
 }
 
-
-const ModalWindow = () => {
+//Модальное окно
+const ModalWindow = () => { 
     const [isModalVisible, setIsModalVisible] = useState(false);
   
     const showModal = () => {
@@ -123,6 +85,7 @@ const ModalWindow = () => {
     },
   };
 
+//Форма для добавления информации
 const Demo = () => {
 
     const onFinish = (values) => {

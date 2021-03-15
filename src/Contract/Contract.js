@@ -12,6 +12,7 @@ export class Contract extends Component{
         this.state={deps:[], addModalShow: false, editModalShow:false}
     }
 
+    //Get json запрос на получение данных с таблицы Контрактов
     refreshList(){
         fetch(process.env.REACT_APP_API+'contract')
         .then(response=>response.json())
@@ -28,6 +29,7 @@ export class Contract extends Component{
         this.refreshList();
     }
 
+    //Delete запрос на удаление данных с таблицы Контрактов
     deleteContract(contrId){
         if(window.confirm('Вы уверенны что хотите удалить?')){
             fetch(process.env.REACT_APP_API+'contract/'+contrId,{
@@ -76,7 +78,8 @@ export class Contract extends Component{
                                 onClick={()=>this.deleteContract(item.ContractId)}>
                                     Delete
                             </Button>
-                                                                
+
+                            {/* Открытие модального Окна Добавления Контракта */}         
                             <EditContractModal show={this.state.editModalShow}
                                     onHide={editModalClose}
                                     contrId={contrId}
@@ -90,6 +93,7 @@ export class Contract extends Component{
                     </tbody>
                 </Table>
 
+                {/* кнопка для открытия модульного окна добавления Контракта */}
                 <ButtonToolbar>
                     <Button variant='primary' 
                     onClick={()=>this.setState({addModalShow:true})}>

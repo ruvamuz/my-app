@@ -7,6 +7,7 @@ export class AddEmployeeModal extends Component{
         this.handleSubmit=this.handleSubmit.bind(this);
     }
 
+    //POST Запрос добавления сотрудника
     handleSubmit(event){
         event.preventDefault();
         fetch(process.env.REACT_APP_API+'employee',{

@@ -7,6 +7,7 @@ export class EditEmployeeModal extends Component{
         this.handleSubmit=this.handleSubmit.bind(this);
     }
 
+    //PUT запрос изменения информации о сотруднике
     handleSubmit(event){
         event.preventDefault();
         fetch(process.env.REACT_APP_API+'employee',{

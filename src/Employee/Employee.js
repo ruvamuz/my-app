@@ -12,6 +12,7 @@ export class Employee extends Component{
         this.state={empls:[], addModalShow: false, editModalShow:false}
     }
 
+    //Get json запрос на получение данных с таблицы Сотрудников
     refreshList(){
         fetch(process.env.REACT_APP_API+'employee')
         .then(response=>response.json())
@@ -27,7 +28,7 @@ export class Employee extends Component{
     componentDidUpdate(){
         this.refreshList();
     }
-
+    //Delete запрос на удаление данных с таблицы Сотрудников
     deleteEmployee(emplId){
         if(window.confirm('Вы уверенны что хотите удалить?')){
             fetch(process.env.REACT_APP_API+'employee/'+emplId,{
@@ -79,7 +80,8 @@ export class Employee extends Component{
                                 onClick={()=>this.deleteEmployee(item.EmployeeId)}>
                                     Delete
                             </Button>
-                                                                
+
+                            {/* Открытие модального Окна Добавления Сотрудника */}                                  
                             <EditEmployeeModal show={this.state.editModalShow}
                                     onHide={editModalClose}
                                     editEmployeeId={employeeId}
@@ -94,6 +96,7 @@ export class Employee extends Component{
                     </tbody>
                 </Table>
                 
+                {/* кнопка для открытия модульного окна добавления Сотрудника */}
                 <ButtonToolbar>
                     <Button varant='primary' 
                     onClick={()=>this.setState({addModalShow:true})}>

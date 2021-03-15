@@ -1,5 +1,7 @@
+//Попытка добавить стандартный модуль календаря, больше ничего интересного нет.
+
 import {React, Component} from 'react';
-import { Calendar, Alert, Modal } from 'antd';
+import { Calendar, Alert } from 'antd';
 import moment from 'moment';
 
 export class CalendarWork extends Component {
