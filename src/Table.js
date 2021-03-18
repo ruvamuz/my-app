@@ -58,11 +58,12 @@ import {AddContractModal} from './Contract/AddContractModal';
         { title: 'Action', key: 'action',
           render: (action, record) => (
             <Space size="middle">
-              {/* <Button type="primary" onClick={(record) => onEdit(1)}> Edit  </Button> | */}
-              <Button danger> Delete </Button>
-                  {/* <Button onClick={()=>this.deleteContract(item.ContractId)}>
+             <Button type="primary" > Edit  </Button> {/* onClick={() =>console.log(action.ContractId) }*/}
+             |
+              {/* <Button danger> Delete </Button> */}
+                  <Button danger onClick={()=>this.deleteContract(action.ContractId)}>{/* this.deleteContract(item.ContractId) */}
                           Delete
-                  </Button> */}
+                  </Button>
             </Space>
           ),
         },
