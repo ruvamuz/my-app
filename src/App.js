@@ -6,8 +6,8 @@ import {Navigation} from './Navigation';  //Компонент для навиг
 
 //Попытка добаления компонентов на AntD 
 import {CalendarWork} from './Calendar/Calendar'; // Стандартный компонент календаря 
-import {TableWork} from './Table'; // 1 таблица
-import {EditableTable} from './Table2'; // 2 таблица
+import {TableWork} from './Contract/Table'; // 1 таблица
+import {EmployeeAntD} from './Employee/EmployeeAntD'; // 2 таблица
 
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
@@ -15,9 +15,6 @@ function App() {
   return (
     <BrowserRouter>
         <div className="container">
-          <h4 className="m3 d-flex justify-content-center">
-            React Js 
-          </h4>
         <Navigation/>
         <Switch>
           <Route path='/' component={Home} exact/> {/* перенаправление на Home - домашнюю страницу */}
@@ -30,7 +27,7 @@ function App() {
           
           <Route path='/table'    component={TableWork}/> {/* перенаправление на 1 Таблицу контрактов с AntD */}
 
-          <Route path='/table2'   component={EditableTable}/> {/* перенаправление на 2 Таблицу контрактов с AntD */}
+          <Route path='/table2'   component={EmployeeAntD}/> {/* перенаправление на 2 Таблицу контрактов с AntD */}
         </Switch>
         </div>
     </BrowserRouter>

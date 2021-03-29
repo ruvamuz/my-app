@@ -22,7 +22,7 @@ export class EditContractModal extends Component{
                 FullNameContract:event.target.FullNameContract.value
             })
         })
-        .then(res=>res.json())
+        .then(res=>console.log(res))
         .then((result)=>{
             alert(result);
         },

@@ -32,7 +32,7 @@ export class EditableTable extends Component {
         dataIndex: 'operation',
         render: (_, record) =>
           this.state.dataSource.length >= 1 ? (
-            <Popconfirm title="Уверенны в удалении?" onConfirm={() => this.deleteContract(record.key)}>
+            <Popconfirm title="Уверенны в удалении? Да?" onConfirm={() => this.deleteContract(record.key)}>
               Delete
             </Popconfirm>
           ) : null,

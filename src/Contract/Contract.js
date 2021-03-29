@@ -9,7 +9,12 @@ export class Contract extends Component{
 
     constructor(props){
         super(props);
-        this.state={deps:[], addModalShow: false, editModalShow:false}
+        this.state=
+        {
+            deps:[], 
+            addModalShow: false, 
+            editModalShow:false
+        }
     }
 
     //Get json запрос на получение данных с таблицы Контрактов

@@ -14,45 +14,51 @@ export class Navigation extends Component{
       };
 
     render(){
-        const { current } = this.state;
+        //const { current } = this.state;
         return(
             <div>
-                <Menu onClick={this.handleClick} selectedKeys={[current]} mode="horizontal">
-        
+                <Menu  mode="horizontal"> 
+                {/* onClick={this.handleClick} selectedKeys={[current]} */}
 
                 <Menu.Item key="home" icon={<HomeOutlined />}>
                     Home
                     <Link to="/"/> {/* перенаправление на Home - домашнюю страницу */}
                 </Menu.Item>
 
-                <Menu.Item key="app" icon={<AppstoreOutlined />}>
+                {/* <Menu.Item key="app" >
                     Contract
-                    <Link to="/contract"/> {/* перенаправление на Таблицу контрактов */}
-                </Menu.Item>
+                    <Link to="/contract"/> {/* перенаправление на Таблицу контрактов 
+                </Menu.Item>  */}
 
-                <Menu.Item icon={<UserOutlined/>}>
+                {/* <Menu.Item >
                     Employee
-                    <Link to="/employee"/> {/* перенаправление на Таблицу сотрудников */}
-                </Menu.Item>
+                    <Link to="/employee"/> {/* перенаправление на Таблицу сотрудников 
+                </Menu.Item> */}
 
-                <Menu.Item icon={<CalendarOutlined/>}>
-                    Calendar
-                    <Link to="/calendar"/> {/* перенаправление на страницу Календаря */}
-                </Menu.Item>
-
-                <Menu.Item >
-                    Table\AntD(Fail)
+                <Menu.Item icon={<AppstoreOutlined />} >
+                    Contract AntD
                     <Link to="/table"/> {/* перенаправление на Таблицу контрактов с AntD */}
                 </Menu.Item>
 
-                <Menu.Item >
-                    Table_2\AntD(Fail)
+                <Menu.Item icon={<UserOutlined/>}>
+                    Employee AntD
                     <Link to="/table2"/> {/* перенаправление на 2 Таблицу контрактов с AntD */}
+                </Menu.Item>
+                
+                <Menu.Item icon={<CalendarOutlined/>}>
+                    Calendar
+                    <Link to="/calendar"/> {/* перенаправление на страницу Календаря */}
                 </Menu.Item>
                                 
                 <Menu.Item key="alipay" >
                   <a href="https://ant.design" target="blank" rel="noopener noreferrer">
                     Ant-D site
+                  </a>
+                </Menu.Item>
+
+                <Menu.Item key="swagger" >
+                  <a href="http://localhost:5000/swagger/index.html" target="blank" >
+                  Swagger
                   </a>
                 </Menu.Item>
       </Menu>

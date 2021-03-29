@@ -22,6 +22,7 @@ export class AddContractModal extends Component{
                 FullNameContract:event.target.FullNameContract.value
             })
         })
+        .then(res => {console.log(res)})
         .then(res=>res.json())
         .then((result)=>{
             alert(result);
