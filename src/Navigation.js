@@ -44,6 +44,11 @@ export class Navigation extends Component{
                     Employee AntD
                     <Link to="/table2"/> {/* перенаправление на 2 Таблицу контрактов с AntD */}
                 </Menu.Item>
+
+                <Menu.Item icon={<UserOutlined/>}>
+                    WorkPlan
+                    <Link to="/workplan"/> {/* перенаправление на 2 Таблицу контрактов с AntD */}
+                </Menu.Item>
                 
                 <Menu.Item icon={<CalendarOutlined/>}>
                     Calendar

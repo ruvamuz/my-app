@@ -8,6 +8,7 @@ import {Navigation} from './Navigation';  //Компонент для навиг
 import {CalendarWork} from './Calendar/Calendar'; // Стандартный компонент календаря 
 import {TableWork} from './Contract/Table'; // 1 таблица
 import {EmployeeAntD} from './Employee/EmployeeAntD'; // 2 таблица
+import {WorkPlan} from './WorkPlan/WorkPlan' //Таблица план
 
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
@@ -28,6 +29,8 @@ function App() {
           <Route path='/table'    component={TableWork}/> {/* перенаправление на 1 Таблицу контрактов с AntD */}
 
           <Route path='/table2'   component={EmployeeAntD}/> {/* перенаправление на 2 Таблицу контрактов с AntD */}
+        
+          <Route path='/workplan'   component={WorkPlan}/> {/* перенаправление на 2 Таблицу контрактов с AntD */}
         </Switch>
         </div>
     </BrowserRouter>

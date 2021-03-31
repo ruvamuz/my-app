@@ -54,7 +54,6 @@ export class TableWork extends Component{
         this.setState({editModalShow: !this.state.editModalShow})
         //console.log(this.state.editModalShow)
         //console.log(item)
-
     }
 
     render(){
