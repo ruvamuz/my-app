@@ -21,7 +21,7 @@ function EditContract(props){
         ShortNameContract: values.shortNameContract,
         FullNameContract: values.fullNameContract
       })
-      .then(response =>{alert(response.data)})
+      //.then(response =>{alert(response.data)})
       .catch(error => {
       console.log(error);
       })

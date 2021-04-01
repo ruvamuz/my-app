@@ -1,114 +1,147 @@
-import React, {setState} from 'react';
-import { Modal, Button, Form, Input, } from 'antd';
+import React, {useState} from 'react';
+import { Modal, Button, Form, Input, Select, DatePicker} from 'antd';
+import moment from 'moment';
 import axios from 'axios';
 
-class EditEmployee extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = 
-      {
-        value: '',
-        isModalVisible: false,
-      };
-      this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    
-    setIsModalVisible(value){
-        this.setState({isModalVisible: value})
-    }
+function EditEmployee(props) {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [jobPos, setJobPos] = useState([]);
+  const { Option } = Select;
+  const dateFormat = 'YYYY-MM-DD';
 
-    handleCancel = () => {
-        this.setIsModalVisible(false);
-      };
+  const showModal = () => {
+    setIsModalVisible(true);
+    getJobPosition();
+  };
 
-    onFinish = (values) => {
-        console.log('Success:', values);
-        axios.put(process.env.REACT_APP_API+'contract',
-        {
-          ContractId: values.contractId,
-          ShortNameContract: values.shortNameContract,
-          FullNameContract: values.fullNameContract
-        })
-        .then(response =>{console.log(response);})
-        .catch(error => {
-        console.log(error);
-        })
-        .then((result)=>{
-             alert(result)
-          })
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const getJobPosition = () => {
+    axios.get(process.env.REACT_APP_API+'jobposition')
+      .then(res => {
+          //console.log(res.data);
+          //this.setState({jobPos: res.data});
+          setJobPos(res.data)
+      })
+      .catch(error =>{console.log(error);})
     };
 
-    handleChange(event) {
-      this.setState({value: event.target.value});
-    }
-  
-    handleSubmit(event) {
-      alert('A name was submitted: ' + this.state.value);
-      event.preventDefault();
-    }
-  
-    render() {
-      //const {item} = this.state;
-      return (
-        <div>
-          {/* <form onSubmit={this.handleSubmit}>
-            <label>
-              Name:
-              <input type="text" value={this.state.value} onChange={this.handleChange} />
-            </label>
-          < input type="submit" value="Submit" />
-          </form> */}
-          
-          {/* <Button type="primary" onClick={()=>console.log(item)}> */}
-          <Button type="primary" onClick={this.showModal}>
+  const onFinish = (values) => {
+    console.log('Success:', values);
+    axios.put(process.env.REACT_APP_API+'employee',
+    {
+      Id: values.id,
+      Family: values.family,
+      Name: values.name,
+      Patronymic: values.patronymic,
+      JobPosition: values.jobPosition ,
+      BirthDate: values.birthDate.format("YYYY-MM-DD"),
+    })
+    //.then(response =>{alert(response.data);})
+    .catch(error => {
+    console.log(error);
+    })
+    // .then((result)=>{
+    //   alert(result)
+    //   })
+    };
+
+    //const {item} = this.state;
+    return (
+      <div>
+
+          {/* <Button type="primary" onClick={()=>console.log(props.item)}> */}
+          <Button type="primary" onClick={showModal}>
           Редактировать
           </Button>
 
           <Modal title="Редактирование контракта" 
-            {...this.props}
+            
             footer={null}
-            visible={this.isModalVisible} 
-            onCancel={this.handleCancel}>
+            visible={isModalVisible} 
+            onCancel={handleCancel}>
             
             <Form
             {...layout}
             name="basic"
-            onFinish={this.onFinish}
-            onSubmit={this.handleSubmit}
+            onFinish={onFinish}
+            //onSubmit={handleSubmit}
             >
         
           <Form.Item
-            label="ContractId"
-            name="сontractId"
+            label="Id"
+            name="id"
           >
           
           <Input 
-            disabled={true}
-            //defaultValue={this.props.item.ContractId}
-            value={this.props.item.ContractId}
+            disabled={false}
+            defaultValue={props.item.Id}
+            //value={props.item.ContractId}
             />
           </Form.Item>
 
           <Form.Item
-            label="ShortNameContract"
-            name="shortNameContract"
+            label="Фамилия"
+            name="family"
           >
           <Input 
-            //defaultValue={props.item.ShortNameContract} 
-            value={this.props.item.ShortNameContract}
+            defaultValue={props.item.Family} 
+            //value={props.item.ShortNameContract}
           />
           </Form.Item>
         
           <Form.Item
+            label="Имя"
+            name="name"
+          >
+          <Input 
+          defaultValue={props.item.Name} 
+          //value={props.item.FullNameContract}
+          />
+          </Form.Item>
+        
+          <Form.Item
+            label="Отчество"
+            name="patronymic"
+          >
+          <Input 
+          defaultValue={props.item.Patronymic} 
+          //value={props.item.FullNameContract}
+          />
+          </Form.Item>
+          
+          <Form.Item
+            label="Должность"
+            name="jobPosition"
+          >
+            <Select defaultValue={props.item.JobPosition}>
+              {jobPos.map(item => 
+                {
+                  return  <Option key={item.Id} value={item.Id.toString()}>
+                            {item.JobPosition}
+                          </Option>
+                })}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            label="Дата рождения"
+            name="birthDate"
+          >
+            <DatePicker defaultValue={moment(props.item.BirthDate,dateFormat)}/>
+          </Form.Item>
+            
+          {/* <Form.Item
             label="FullNameContract"
             name="fullNameContract"
           >
           <Input 
-          //defaultValue={props.item.FullNameContract} 
-          value={this.props.item.FullNameContract}
+          defaultValue={props.item.FullNameContract} 
+          //value={props.item.FullNameContract}
           />
-          </Form.Item>
+          </Form.Item> */}
         
               <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">
@@ -119,7 +152,6 @@ class EditEmployee extends React.Component {
         </Modal>
         </div>
       );
-    }
   }
 
 const layout = {

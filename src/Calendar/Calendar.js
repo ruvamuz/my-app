@@ -28,7 +28,7 @@ export class CalendarWork extends Component {
         <Alert
           message={`You selected date: ${selectedValue && selectedValue.format('YYYY-MM-DD')}`}
         />
-        <Calendar value={value} onSelect={this.onSelect} onPanelChange={this.onPanelChange} />
+        <Calendar value={value} onSelect={this.onSelect} mode="year" onPanelChange={this.onPanelChange} />
       </>
     );
   }

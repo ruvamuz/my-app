@@ -27,43 +27,45 @@ function AddContractModalAntd(props){
 
     // Вывод модального окна добавления Контракта
     return(
-        <div className="container">
-                <Button type="primary" onClick={showModal}>
-                  Добавить контракт
-                </Button>
-                <Modal title="Добавить контракт" 
-                footer={null}
-                visible={isModalVisible} 
-                onCancel={handleCancel}>
+      <div className="container">
+            
+            <Button type="primary" onClick={showModal}>
+              Добавить контракт
+            </Button>
+            
+            <Modal title="Добавить контракт" 
+            footer={null}
+            visible={isModalVisible} 
+            onCancel={handleCancel}>
                   
-                  <Form
-                  {...layout}
-                  name="basic"
-                  onFinish={onFinish}
-                  >
+            <Form
+            {...layout}
+              name="basic"
+              onFinish={onFinish}
+            >
 
-                  <Form.Item
-                    label="Короткое название"
-                    name="shortNameContract"
-                  >
-                    <Input />
-                  </Form.Item>
+            <Form.Item
+              label="Короткое название"
+              name="shortNameContract"
+            >
+              <Input />
+            </Form.Item>
             
-                  <Form.Item
-                    label="Полное название"
-                    name="fullNameContract"
-                  >
-                    <Input/>
-                  </Form.Item>
+            <Form.Item
+              label="Полное название"
+              name="fullNameContract"
+            >
+              <Input/>
+            </Form.Item>
             
-                  <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit" >
-                      Добавить 
-                    </Button>
-                  </Form.Item>
-                </Form>
-                </Modal>
-            </div>
+            <Form.Item {...tailLayout}>
+              <Button type="primary" htmlType="submit" >
+                Добавить 
+              </Button>
+            </Form.Item>
+          </Form>
+        </Modal>
+      </div>
     )
 }
 
