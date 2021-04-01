@@ -15,18 +15,18 @@ function EditContract(props){
     
     const onFinish = (values) => {
       console.log('Success:', values);
-      // axios.put(process.env.REACT_APP_API+'contract',
-      // {
-      //   Id: values.Id,
-      //   ShortNameContract: values.shortNameContract,
-      //   FullNameContract: values.fullNameContract
-      // })
-      // .then(response =>{console.log(response);})
-      // .catch(error => {
-      // console.log(error);
-      // })
-      // .then((result)=>{
-      //      alert(result)
+      axios.put(process.env.REACT_APP_API+'contract',
+      {
+        Id: values.Id,
+        ShortNameContract: values.shortNameContract,
+        FullNameContract: values.fullNameContract
+      })
+      .then(response =>{alert(response.data)})
+      .catch(error => {
+      console.log(error);
+      })
+      // .then(result=>{
+      //      console.log("result ",result)
       //   })
     };
 
@@ -53,7 +53,7 @@ function EditContract(props){
           >
           
           <Input 
-            disabled={true}
+            // disabled={true}
             defaultValue={props.item.Id}
             //value={props.item.Id}
             />
@@ -65,7 +65,8 @@ function EditContract(props){
           >
           <Input 
           defaultValue={props.item.ShortNameContract} 
-          value={props.item.ShortNameContract}/>
+          //value={props.item.ShortNameContract}
+          />
           </Form.Item>
         
           <Form.Item

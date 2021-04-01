@@ -4,7 +4,7 @@ import { Table, Space, Popconfirm,  } from 'antd';
 //import EditContract from './Contract/EditContractModal-antd';
 import axios from 'axios';
 import AddEmployeeAntd from './AddEmployeeAntD'
-import EditContract from './EditContract-AntD'
+import EditEmployee from './EditEmployee-AntD'
 
 export class EmployeeAntD extends Component{
     //Конструктор объявляющий переменные для значении
@@ -45,7 +45,7 @@ export class EmployeeAntD extends Component{
     }
 
     //метод для удаления строки таблицы. Так и не понял как получать id строки 
-    deleteContract(contrId){
+    deleteEmloyee(contrId){
         axios.delete(process.env.REACT_APP_API+'employee/'+contrId,
         {
             header:{
@@ -80,9 +80,9 @@ export class EmployeeAntD extends Component{
     { title: 'Действия', key: 'option',
         render: (item) => (
             <Space size="middle">
-            <EditContract item={item}/>
+            <EditEmployee item={item}/>
             |
-            <Popconfirm title="Уверены в удалении?" onConfirm={() => this.deleteContract(item.Id)}>
+            <Popconfirm title="Уверены в удалении?" onConfirm={() => this.deleteEmloyee(item.Id)}>
             Удалить
             </Popconfirm>      
             </Space>

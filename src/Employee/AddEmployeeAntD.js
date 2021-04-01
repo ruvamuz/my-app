@@ -49,7 +49,7 @@ function AddEmployeeAntd(props){
     return(
         <div className="container">
                 <Button type="primary" onClick={showModal}>
-                  Open Modal
+                  Добавить сотрудника
                 </Button>
                 <Modal title="Добавить сотрудника" 
                 footer={null}
@@ -106,7 +106,7 @@ function AddEmployeeAntd(props){
             
                   <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit" >
-                      Добавить Сотрудника
+                      Добавить 
                     </Button>
                   </Form.Item>
                 </Form>

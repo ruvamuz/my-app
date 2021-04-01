@@ -29,9 +29,9 @@ function AddContractModalAntd(props){
     return(
         <div className="container">
                 <Button type="primary" onClick={showModal}>
-                  Open Modal
+                  Добавить контракт
                 </Button>
-                <Modal title="Add contract" 
+                <Modal title="Добавить контракт" 
                 footer={null}
                 visible={isModalVisible} 
                 onCancel={handleCancel}>
@@ -43,14 +43,14 @@ function AddContractModalAntd(props){
                   >
 
                   <Form.Item
-                    label="ShortNameContract"
+                    label="Короткое название"
                     name="shortNameContract"
                   >
                     <Input />
                   </Form.Item>
             
                   <Form.Item
-                    label="FullNameContract"
+                    label="Полное название"
                     name="fullNameContract"
                   >
                     <Input/>
@@ -58,7 +58,7 @@ function AddContractModalAntd(props){
             
                   <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit" >
-                      Add Contract 
+                      Добавить 
                     </Button>
                   </Form.Item>
                 </Form>

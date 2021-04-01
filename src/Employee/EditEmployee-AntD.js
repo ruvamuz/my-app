@@ -2,7 +2,7 @@ import React, {setState} from 'react';
 import { Modal, Button, Form, Input, } from 'antd';
 import axios from 'axios';
 
-class EditContract extends React.Component {
+class EditEmployee extends React.Component {
     constructor(props) {
       super(props);
       this.state = 
@@ -49,7 +49,7 @@ class EditContract extends React.Component {
     }
   
     render() {
-      const {item} = this.state;
+      //const {item} = this.state;
       return (
         <div>
           {/* <form onSubmit={this.handleSubmit}>
@@ -60,12 +60,12 @@ class EditContract extends React.Component {
           < input type="submit" value="Submit" />
           </form> */}
           
-          <Button type="primary" onClick={()=>console.log(item)}>
-          {/* <Button type="primary" onClick={this.showModal}> */}
+          {/* <Button type="primary" onClick={()=>console.log(item)}> */}
+          <Button type="primary" onClick={this.showModal}>
           Редактировать
           </Button>
 
-          {/* <Modal title="Редактирование контракта" 
+          <Modal title="Редактирование контракта" 
             {...this.props}
             footer={null}
             visible={this.isModalVisible} 
@@ -116,7 +116,7 @@ class EditContract extends React.Component {
                 </Button>
               </Form.Item>
             </Form>
-        </Modal> */}
+        </Modal>
         </div>
       );
     }
@@ -131,4 +131,4 @@ const tailLayout = {
     wrapperCol: { offset: 8, span: 16 },
 };
 
-export default EditContract
+export default EditEmployee
