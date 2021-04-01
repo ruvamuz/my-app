@@ -15,19 +15,19 @@ function EditContract(props){
     
     const onFinish = (values) => {
       console.log('Success:', values);
-      axios.put(process.env.REACT_APP_API+'contract',
-      {
-        ContractId: values.contractId,
-        ShortNameContract: values.shortNameContract,
-        FullNameContract: values.fullNameContract
-      })
-      .then(response =>{console.log(response);})
-      .catch(error => {
-      console.log(error);
-      })
-      .then((result)=>{
-           alert(result)
-        })
+      // axios.put(process.env.REACT_APP_API+'contract',
+      // {
+      //   Id: values.Id,
+      //   ShortNameContract: values.shortNameContract,
+      //   FullNameContract: values.fullNameContract
+      // })
+      // .then(response =>{console.log(response);})
+      // .catch(error => {
+      // console.log(error);
+      // })
+      // .then((result)=>{
+      //      alert(result)
+      //   })
     };
 
     return(
@@ -48,14 +48,14 @@ function EditContract(props){
             >
         
           <Form.Item
-            label="ContractId"
-            name="сontractId"
+            label="Id"
+            name="Id"
           >
           
           <Input 
             disabled={true}
-            defaultValue={props.item.ContractId}
-            value={props.item.ContractId}
+            defaultValue={props.item.Id}
+            //value={props.item.Id}
             />
           </Form.Item>
 
@@ -63,14 +63,19 @@ function EditContract(props){
             label="ShortNameContract"
             name="shortNameContract"
           >
-          <Input defaultValue={props.item.ShortNameContract} value={props.item.ShortNameContract}/>
+          <Input 
+          defaultValue={props.item.ShortNameContract} 
+          value={props.item.ShortNameContract}/>
           </Form.Item>
         
           <Form.Item
             label="FullNameContract"
             name="fullNameContract"
           >
-          <Input defaultValue={props.item.FullNameContract} value={props.item.FullNameContract} />
+          <Input 
+          defaultValue={props.item.FullNameContract} 
+          //value={props.item.FullNameContract} 
+          />
           </Form.Item>
         
               <Form.Item {...tailLayout}>

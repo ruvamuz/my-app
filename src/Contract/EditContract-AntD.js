@@ -10,8 +10,8 @@ class EditContract extends React.Component {
         value: '',
         isModalVisible: false,
       };
-      this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
+      //this.handleChange = this.handleChange.bind(this);
+      // this.handleSubmit = this.handleSubmit.bind(this);
     }
     
     setIsModalVisible(value){
@@ -43,10 +43,10 @@ class EditContract extends React.Component {
       this.setState({value: event.target.value});
     }
   
-    handleSubmit(event) {
-      alert('A name was submitted: ' + this.state.value);
-      event.preventDefault();
-    }
+    // handleSubmit(event) {
+    //   alert('A name was submitted: ' + this.state.value);
+    //   event.preventDefault();
+    // }
   
     render() {
       const {item} = this.state;
@@ -65,7 +65,7 @@ class EditContract extends React.Component {
           Редактировать
           </Button>
 
-          {/* <Modal title="Редактирование контракта" 
+          <Modal title="Редактирование контракта" 
             {...this.props}
             footer={null}
             visible={this.isModalVisible} 
@@ -75,7 +75,7 @@ class EditContract extends React.Component {
             {...layout}
             name="basic"
             onFinish={this.onFinish}
-            onSubmit={this.handleSubmit}
+            //onSubmit={this.handleSubmit}
             >
         
           <Form.Item
@@ -116,7 +116,7 @@ class EditContract extends React.Component {
                 </Button>
               </Form.Item>
             </Form>
-        </Modal> */}
+        </Modal>
         </div>
       );
     }

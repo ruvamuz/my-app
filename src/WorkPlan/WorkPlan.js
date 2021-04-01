@@ -28,7 +28,7 @@ const rows = [
   {id: 4, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
   {id: 5, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
   {id: 6, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 7, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 7, time8:"", time9:"wer", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
   {id: 8, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
   {id: 9, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
   {id: 10, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
@@ -71,7 +71,7 @@ export class WorkPlan extends React.Component {
   }
 
   showModal = (args) => {
-    //console.log(this.state.points)
+    console.log(this.state.points)
     this.setState({points:args});
     //if (this.state.points ===null) console.log(this.state.points.bottomRight);
     this.setIsModalVisible(true);
@@ -117,15 +117,16 @@ export class WorkPlan extends React.Component {
     }}
     />
     
-    <Modal title="Basic Modal" 
-    visible={this.state.isModalVisible} 
-    onOk={this.handleOk} 
-    onCancel={this.handleCancel}
-    >
-        <p></p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-    </Modal>
+      <Modal title="Basic Modal"
+      {...this.state.points} 
+      visible={this.state.isModalVisible} 
+      onOk={this.handleOk} 
+      onCancel={this.handleCancel}
+      >
+          {/* <p>{this.state.points}</p> */}
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+      </Modal>
 
     </div>
     );

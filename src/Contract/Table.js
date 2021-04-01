@@ -1,10 +1,10 @@
 // Данная таблица является 1 безуспешной попыткой подружить работающую таблицу с AntD
 import {React, Component, } from 'react';
 import { Table, Space, Popconfirm } from 'antd';
-//import EditContract from './Contract/EditContractModal-antd';
+import EditContract from './EditContractModal-antd';
 import axios from 'axios';
 import AddContractModalAntd from './AddContractModal-antd'
-import EditContract from './EditContract-AntD'
+//import EditContract from './EditContract-AntD'
 
 export class TableWork extends Component{
     //Конструктор объявляющий переменные для значении
