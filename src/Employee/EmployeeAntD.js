@@ -1,10 +1,9 @@
 // Данная таблица является 1 безуспешной попыткой подружить работающую таблицу с AntD
 import {React, Component, } from 'react';
 import { Table, Space, Popconfirm,  } from 'antd';
-//import EditContract from './Contract/EditContractModal-antd';
 import axios from 'axios';
 import AddEmployeeAntd from './AddEmployeeAntD'
-import EditEmployee from './EditEmployee-AntD'
+import EditEmployee from './EditEmployeeAntD'
 
 export class EmployeeAntD extends Component{
     //Конструктор объявляющий переменные для значении

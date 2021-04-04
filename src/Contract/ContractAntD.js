@@ -1,12 +1,11 @@
 // Данная таблица является 1 безуспешной попыткой подружить работающую таблицу с AntD
 import {React, Component, } from 'react';
 import { Table, Space, Popconfirm } from 'antd';
-import EditContract from './EditContractModal-antd';
+import EditContract from './EditContractAntD';
 import axios from 'axios';
-import AddContractModalAntd from './AddContractModal-antd'
-//import EditContract from './EditContract-AntD'
+import AddContractModalAntd from './AddContractAntD'
 
-export class TableWork extends Component{
+export class ContractAntD extends Component{
     //Конструктор объявляющий переменные для значении
     constructor(props){
         super(props);
@@ -26,7 +25,7 @@ export class TableWork extends Component{
         })
     }
 
-    //Запрос таблицы при монторовании элемента TableWork
+    //Запрос таблицы при монтировании элемента ContractAntD
     componentDidMount(){
         this.refreshList();
         this.timerID = setInterval(

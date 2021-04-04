@@ -25,24 +25,14 @@ export class Navigation extends Component{
                     <Link to="/"/> {/* перенаправление на Home - домашнюю страницу */}
                 </Menu.Item>
 
-                {/* <Menu.Item key="app" >
-                    Contract
-                    <Link to="/contract"/> {/* перенаправление на Таблицу контрактов 
-                </Menu.Item>  */}
-
-                {/* <Menu.Item >
-                    Employee
-                    <Link to="/employee"/> {/* перенаправление на Таблицу сотрудников 
-                </Menu.Item> */}
-
                 <Menu.Item icon={<AppstoreOutlined />} >
                     Contract AntD
-                    <Link to="/table"/> {/* перенаправление на Таблицу контрактов с AntD */}
+                    <Link to="/contract"/> {/* перенаправление на Таблицу контрактов с AntD */}
                 </Menu.Item>
 
                 <Menu.Item icon={<UserOutlined/>}>
                     Employee AntD
-                    <Link to="/table2"/> {/* перенаправление на 2 Таблицу контрактов с AntD */}
+                    <Link to="/employee"/> {/* перенаправление на 2 Таблицу контрактов с AntD */}
                 </Menu.Item>
 
                 <Menu.Item icon={<UserOutlined/>}>

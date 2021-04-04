@@ -47,6 +47,7 @@ export class WorkPlan extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      rows,
       args:"",
       isModalVisible: false,
       Option: Select,
@@ -54,7 +55,8 @@ export class WorkPlan extends React.Component {
     }
   }
 
-  state = { rows };
+  //state = { rows };
+  
   //const { Option } = Select;
   // componentDidMount(){
   //   this.timerID = setInterval(
@@ -139,7 +141,6 @@ export class WorkPlan extends React.Component {
         <Select style={{ width: 470 }}>
           {this.state.contrItem.map(item => 
             {
-              //console.log(item.Id)
               return  <Select key={item.Id} value={item.ShortNameContract}>
                         {item.ShortNameContract}
                       </Select>

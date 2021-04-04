@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Modal, Button, Form, Input, } from 'antd';
+import { Modal, Button, Form, Input, message } from 'antd';
 import axios from 'axios';
 
 function EditContract(props){
@@ -17,17 +17,16 @@ function EditContract(props){
       console.log('Success:', values);
       axios.put(process.env.REACT_APP_API+'contract',
       {
-        Id: values.Id,
+        Id: values.id,
         ShortNameContract: values.shortNameContract,
         FullNameContract: values.fullNameContract
       })
-      //.then(response =>{alert(response.data)})
-      .catch(error => {
-      console.log(error);
+      .then(response =>{
+        message.info(response.data)
       })
-      // .then(result=>{
-      //      console.log("result ",result)
-      //   })
+      .catch(error => {
+        message.error(error);
+      })
     };
 
     return(
@@ -49,9 +48,8 @@ function EditContract(props){
         
           <Form.Item
             label="Id"
-            name="Id"
+            name="id"
           >
-          
           <Input 
             // disabled={true}
             defaultValue={props.item.Id}
@@ -64,8 +62,8 @@ function EditContract(props){
             name="shortNameContract"
           >
           <Input 
-          defaultValue={props.item.ShortNameContract} 
-          //value={props.item.ShortNameContract}
+            defaultValue={props.item.ShortNameContract} 
+            //value={props.item.ShortNameContract}
           />
           </Form.Item>
         
@@ -74,8 +72,8 @@ function EditContract(props){
             name="fullNameContract"
           >
           <Input 
-          defaultValue={props.item.FullNameContract} 
-          //value={props.item.FullNameContract} 
+            defaultValue={props.item.FullNameContract} 
+            //value={props.item.FullNameContract} 
           />
           </Form.Item>
         
