@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { Form, Input, Modal, Button, } from 'antd';
+import { Form, Input, Modal, Button, message } from 'antd';
 import axios from 'axios';
 
 function AddContractModalAntd(props){
@@ -14,15 +14,16 @@ function AddContractModalAntd(props){
     };
 
     const onFinish = (values) => {
-      //console.log('Success: - ', values);
       axios.post(process.env.REACT_APP_API+'contract',{
           ShortNameContract: values.shortNameContract,
           FullNameContract: values.fullNameContract
       })
-      //.then(response =>{console.log(response);})
+      .then(response =>{
+        message.info(response.data)
+      })
       .catch(error => {
-      console.log(error);
-      });
+        message.error(error);
+      })
     };
 
     // Вывод модального окна добавления Контракта

@@ -1,6 +1,6 @@
 // Данная таблица является 1 безуспешной попыткой подружить работающую таблицу с AntD
 import {React, Component, } from 'react';
-import { Table, Space, Popconfirm,  } from 'antd';
+import { Table, Space, Popconfirm, message } from 'antd';
 import axios from 'axios';
 import AddEmployeeAntd from './AddEmployeeAntD'
 import EditEmployee from './EditEmployeeAntD'
@@ -21,10 +21,6 @@ export class EmployeeAntD extends Component{
         axios.get(process.env.REACT_APP_API+'employee')
         .then(res => {
             this.setState({deps: res.data})
-        })
-        //.then(res => console.log(res.data))
-        .catch(error =>{
-            console.log(error);
         })
     }
 
@@ -51,6 +47,12 @@ export class EmployeeAntD extends Component{
                 'Accept':'application/json',
                 'Content-Type':'application/json'
             }
+        })
+        .then(response =>{
+            message.info(response.data)
+        })
+        .catch(error => {
+            message.error(error);
         })
     }
     

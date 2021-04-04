@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Modal, Button, Form, Input, Select, DatePicker} from 'antd';
+import { Modal, Button, Form, Input, Select, DatePicker, message} from 'antd';
 import moment from 'moment';
 import axios from 'axios';
 
@@ -29,7 +29,7 @@ function EditEmployee(props) {
     };
 
   const onFinish = (values) => {
-    console.log('Success:', values);
+    //console.log('Success:', values);
     axios.put(process.env.REACT_APP_API+'employee',
     {
       Id: values.id,
@@ -39,13 +39,12 @@ function EditEmployee(props) {
       JobPosition: values.jobPosition ,
       BirthDate: values.birthDate.format("YYYY-MM-DD"),
     })
-    //.then(response =>{alert(response.data);})
-    .catch(error => {
-    console.log(error);
+    .then(response =>{
+      message.info(response.data)
     })
-    // .then((result)=>{
-    //   alert(result)
-    //   })
+    .catch(error => {
+      message.error(error);
+    })
     };
 
     //const {item} = this.state;

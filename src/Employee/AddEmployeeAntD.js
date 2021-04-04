@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { Form, Input, Modal, Button, DatePicker, Select } from 'antd';
+import { Form, Input, Modal, Button, DatePicker, Select, message} from 'antd';
 import axios from 'axios';
 //import { render } from '@testing-library/react';
 //import moment from 'moment';
@@ -21,7 +21,7 @@ function AddEmployeeAntd(props){
     const onFinish = (values) => {
       //console.log('Success: - ', values);
       //console.log('Дата: - ', values.birthDate);
-      console.log('select - ', String(values.jobPosition))
+      //console.log('select - ', String(values.jobPosition))
       axios.post(process.env.REACT_APP_API+'employee',{
           Family: values.family,
           Name: values.name,
@@ -29,10 +29,12 @@ function AddEmployeeAntd(props){
           JobPosition: values.jobPosition,
           BirthDate: values.birthDate.format("YYYY-MM-DD")
       })
-      .then(response =>{console.log(response);})
+      .then(response =>{
+        message.info(response.data)
+      })
       .catch(error => {
-      console.log(error);
-      });
+        message.error(error);
+      })
     };
 
     const getJobPosition = () => {

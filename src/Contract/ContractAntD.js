@@ -1,6 +1,6 @@
 // Данная таблица является 1 безуспешной попыткой подружить работающую таблицу с AntD
 import {React, Component, } from 'react';
-import { Table, Space, Popconfirm } from 'antd';
+import { Table, Space, Popconfirm, message } from 'antd';
 import EditContract from './EditContractAntD';
 import axios from 'axios';
 import AddContractModalAntd from './AddContractAntD'
@@ -47,6 +47,12 @@ export class ContractAntD extends Component{
                 'Content-Type':'application/json'
             }
         })
+        .then(response =>{
+            message.info(response.data)
+          })
+          .catch(error => {
+            message.error(error);
+          })
     }
     
     openEditModal(item){
