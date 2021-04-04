@@ -9,6 +9,7 @@ import {CalendarWork} from './Calendar/Calendar'; // Стандартный ко
 import {TableWork} from './Contract/Table'; // 1 таблица
 import {EmployeeAntD} from './Employee/EmployeeAntD'; // 2 таблица
 import {WorkPlan} from './WorkPlan/WorkPlan' //Таблица план
+import {Example} from './WorkPlan/tableworkplan';
 
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
@@ -31,6 +32,8 @@ function App() {
           <Route path='/table2'   component={EmployeeAntD}/> {/* перенаправление на 2 Таблицу контрактов с AntD */}
         
           <Route path='/workplan'   component={WorkPlan}/> {/* перенаправление на 2 Таблицу контрактов с AntD */}
+
+          <Route path='/tableworkplan'   component={Example}/> {/* перенаправление на 2 Таблицу контрактов с AntD */}
         </Switch>
         </div>
     </BrowserRouter>

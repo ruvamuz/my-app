@@ -1,11 +1,11 @@
 import React from 'react';
-import { Modal } from 'antd';
+import { Modal,Select } from 'antd';
 import ReactDataGrid from 'react-data-grid';
+import axios from 'axios';
+import "./styles.css";
 
 const columns = [
   { key: 'id', name: 'ID' },
-  // { key: 'title', name: 'Title' },
-  // { key: 'count', name: 'Count' }, 
   { key: "time8", name: "8:00", editable: true },
   { key: "time9", name: "9:00", editable: true },
   { key: "time10", name: "10:00", editable: true },
@@ -21,38 +21,41 @@ const columns = [
 ];
 
 const rows = [
-  {id: 0, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", }, 
-  {id: 1, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 2, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 3, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 4, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 5, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 6, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 7, time8:"", time9:"wer", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 8, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 9, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 10, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 11, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 12, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 13, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 14, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 15, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 16, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 17, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 18, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 19, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 0, key:0, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", }, 
+  {id: 1, key:1, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 2, key:2, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 3, key:3, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 4, key:4, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 5, key:5, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 6, key:6, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 7, key:7, time8:"", time9:"wer", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 8, key:8, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 9, key:9, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 10, key:10, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 11, key:11, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 12, key:12, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 13, key:13, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 14, key:14, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 15, key:15, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 16, key:16, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 17, key:17, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 18, key:18, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 19, key:19, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
 ];
 
 export class WorkPlan extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      rows,
-      points: null,
-      isModalVisible: false
+      args:"",
+      isModalVisible: false,
+      Option: Select,
+      contrItem:[],
     }
   }
 
+  state = { rows };
+  //const { Option } = Select;
   // componentDidMount(){
   //   this.timerID = setInterval(
   //       () => console.log(this.state.isModalVisible),
@@ -64,16 +67,15 @@ export class WorkPlan extends React.Component {
   //   clearInterval(this.timerID);
   // }
 
-  //state = { rows };
-
   setIsModalVisible(value){
     this.setState({isModalVisible:value})
   }
 
-  showModal = (args) => {
-    console.log(this.state.points)
-    this.setState({points:args});
-    //if (this.state.points ===null) console.log(this.state.points.bottomRight);
+  showModal = (value) => {
+    this.setState({args:value});
+    //console.log(this.state.args)
+
+    this.getContract();
     this.setIsModalVisible(true);
   };
 
@@ -85,15 +87,24 @@ export class WorkPlan extends React.Component {
     this.setIsModalVisible(false);
   };
 
-  onGridRowsUpdated = ({ fromRow, toRow, updated }) => {
-    this.setState(state => {
-      const rows = state.rows.slice();
-      for (let i = fromRow; i <= toRow; i++) {
-        rows[i] = { ...rows[i], ...updated };
-      }
-      return { rows };
-    });
-  };
+  getContract = () => {
+    axios.get(process.env.REACT_APP_API+'contract')
+      .then(res => {
+          this.setState({contrItem: res.data});
+          //console.log(res.data)
+      })
+      .catch(error =>{console.log(error);})
+    };
+
+    onGridRowsUpdated = ({ fromRow, toRow, updated }) => {
+      this.setState(state => {
+        const rows = state.rows.slice();
+        for (let i = fromRow; i <= toRow; i++) {
+          rows[i] = { ...rows[i], ...updated };
+        }
+        return { rows };
+      });
+    };
 
   render(){
     return (
@@ -102,13 +113,16 @@ export class WorkPlan extends React.Component {
     columns={columns}
     rowGetter={i => rows[i]}
     rowsCount={30}
-    //minHeight={450}
+    minHeight={650}
     onGridRowsUpdated={this.onGridRowsUpdated}
-    enableCellSelect={true}
+    //enableCellSelect={true}
     cellRangeSelection={{
       //onStart: e => console.log("onStart",e.topLeft ),
-      //onUpdate: args => console.log(args.topRight),
+      // onUpdate: args => console.log(args),
+      
       onComplete: (args) => this.showModal(args)
+      
+      // onComplete: (args) => this.showModal(args)
       // onComplete: args => console.log(
       //   "onComplete: args.startCell", args.startCell,
       //   "args.topLeft ", args.topLeft, 
@@ -118,16 +132,22 @@ export class WorkPlan extends React.Component {
     />
     
       <Modal title="Basic Modal"
-      {...this.state.points} 
       visible={this.state.isModalVisible} 
       onOk={this.handleOk} 
       onCancel={this.handleCancel}
       >
-          {/* <p>{this.state.points}</p> */}
-          <p>Some contents...</p>
-          <p>Some contents...</p>
+        <Select style={{ width: 470 }}>
+          {this.state.contrItem.map(item => 
+            {
+              //console.log(item.Id)
+              return  <Select key={item.Id} value={item.ShortNameContract}>
+                        {item.ShortNameContract}
+                      </Select>
+            })}
+        </Select>
+        {console.log(this.state.args)}
+        {/* <p>{this.state.args.bottomRight.toString()}</p> */}
       </Modal>
-
     </div>
     );
   }
