@@ -22,8 +22,6 @@ function App() {
           <Route path='/contract' component={ContractAntD}/> {/* перенаправление на Таблицу Контрактов */}
 
           <Route path='/employee' component={EmployeeAntD}/> {/* перенаправление на Таблицу Сотрудников */}
-
-          <Route path='/calendar' component={CalendarWork}/> {/* перенаправление на страницу Календаря */}
         
           <Route path='/workplan' component={WorkPlan}/> {/* перенаправление на 2 Таблицу контрактов с AntD */}
 

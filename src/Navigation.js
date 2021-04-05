@@ -44,11 +44,6 @@ export class Navigation extends Component{
                     tableWorkPlan
                     <Link to="/tableworkplan"/> {/* перенаправление на 2 Таблицу контрактов с AntD */}
                 </Menu.Item>
-
-                <Menu.Item icon={<CalendarOutlined/>}>
-                    Calendar
-                    <Link to="/calendar"/> {/* перенаправление на страницу Календаря */}
-                </Menu.Item>
                                 
                 <Menu.Item key="alipay" >
                   <a href="https://ant.design" target="blank" rel="noopener noreferrer">

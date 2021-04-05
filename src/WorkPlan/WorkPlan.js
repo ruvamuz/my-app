@@ -47,7 +47,7 @@ export class WorkPlan extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      rows,
+      //rows,
       args:"",
       isModalVisible: false,
       Option: Select,
@@ -55,8 +55,8 @@ export class WorkPlan extends React.Component {
     }
   }
 
-  //state = { rows };
-  
+  state = { rows };
+
   //const { Option } = Select;
   // componentDidMount(){
   //   this.timerID = setInterval(
