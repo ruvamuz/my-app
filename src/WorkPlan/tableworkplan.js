@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDataGrid from "react-data-grid";
-import { Modal, Select } from 'antd';
+import { Modal, Select, Form, Button } from 'antd';
 import axios from 'axios';
 import "./styles.css";
 
@@ -21,16 +21,16 @@ const columns = [
 ];
 
 const rows = [
-  {id: 0, key:0, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", }, 
-  {id: 1, key:1, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 2, key:2, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 3, key:3, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 4, key:4, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 5, key:5, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 6, key:6, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 7, key:7, time8:"", time9:"wer", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 8, key:8, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-  {id: 9, key:9, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 0, key:0, time8:"1", time9:"1", time10:"1", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", }, 
+  {id: 1, key:1, time8:"2", time9:"2", time10:"2", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 2, key:2, time8:"3", time9:"3", time10:"3", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 3, key:3, time8:"4", time9:"4", time10:"4", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 4, key:4, time8:"5", time9:"5", time10:"5", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 5, key:5, time8:"6", time9:"6", time10:"6", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 6, key:6, time8:"7", time9:"7", time10:"7", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 7, key:7, time8:"8", time9:"8", time10:"8", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 8, key:8, time8:"9", time9:"9", time10:"9", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
+  {id: 9, key:9, time8:"5", time9:"5", time10:"5", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
   {id: 10, key:10, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
   {id: 11, key:11, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
   {id: 12, key:12, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
@@ -43,6 +43,21 @@ const rows = [
   {id: 19, key:19, time8:"", time9:"", time10:"", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
 ];
 
+const layout = {
+  labelCol: {
+    span: 8,
+  },
+  wrapperCol: {
+    span: 16,
+  },
+};
+const tailLayout = {
+  wrapperCol: {
+    offset: 8,
+    span: 16,
+  },
+};
+
 export class Example extends React.Component {
   constructor(props){
     super(props);
@@ -50,7 +65,6 @@ export class Example extends React.Component {
       rows,
       args:"",
       isModalVisible: false,
-      Option: Select,
       contrItem:[],
     }
   }
@@ -64,15 +78,14 @@ export class Example extends React.Component {
   showModal = (value) => {
     this.setState({args:value});
     console.log("showModal: args", this.state.args)
-
     this.getContract();
     this.setIsModalVisible(true);
   };
   
-  handleOk = () => {
-    this.onGridRowsUpdated(this.state.args);
-    this.setIsModalVisible(false);
-  };
+  // handleOk = () => {
+  //   this.onGridRowsUpdated(this.state.args);
+  //   this.setIsModalVisible(false);
+  // };
 
   handleCancel = () => {
     this.setIsModalVisible(false);
@@ -87,9 +100,9 @@ export class Example extends React.Component {
       .catch(error =>{console.log(error);})
     };
 
-  onGridRowsUpdated = (value) => {
-    console.log("value",value)
-  };
+  // onGridRowsUpdated = (value) => {
+  //   console.log("startCell",value.startCell.idx, "bottomRight", value.bottomRight.idx)
+  // };
 
   // onGridRowsUpdated = ({ fromRow, toRow, updated }) => {
   //   this.setState(state => {
@@ -101,6 +114,67 @@ export class Example extends React.Component {
   //   });
   // };
 
+  onFinish = (values) => {
+    //var args = this.state.args;
+    var topLeft = this.state.args.topLeft;
+    var bottomRight = this.state.args.bottomRight;
+    var updated = values.shortContract;
+    //console.log("startCell",this.state.args.startCell.idx, "bottomRight", this.state.args.bottomRight.idx)
+    //this.onGridRowsUpdated(fromRow={startRow}, toRow={toRow}, updated={updateText});
+
+    // this.state.rows.map((row) =>{
+
+    //   return arr = (
+    //     row.id, 
+    //     row.time8, 
+    //     row.time9, 
+    //     row.time10, 
+    //     row.time11, 
+    //     row.time12, 
+    //     row.time13,
+    //     row.time14,
+    //     row.time15,
+    //     row.time16,
+    //     row.time17,
+    //     row.time18,
+    //     row.time19
+    //     );
+    //     {console.log("hello")}
+    // })
+
+    const keys = Object.keys(rows)
+    for (const key of keys) {
+      if (key == topLeft.rowIdx){
+        for (var i = topLeft.idx+1; i <=bottomRight.idx+1; i++){
+          console.log(`key = ${key}, value = ${Object.values(rows[key])[i]}`)
+        }
+      }
+    }
+
+    // this.setState(state => {
+    //   const rows = state.rows.slice();
+    //     console.log(rows[topLeft.rowIdx].time8);
+    //   return { rows };
+    // });
+    
+    // onFinish = (values) => {
+    //   var fromRow = this.state.args.startCell.idx;
+    //   var toRow = this.state.args.bottomRight.idx;
+    //   var updated = values.shortContract;
+    //   //console.log("startCell",this.state.args.startCell.idx, "bottomRight", this.state.args.bottomRight.idx)
+    //   //this.onGridRowsUpdated(fromRow={startRow}, toRow={toRow}, updated={updateText});
+  
+    //   this.setState(state => {
+    //     const rows = state.rows.slice();
+    //     for (let i = fromRow; i <= toRow; i++) {
+          
+    //       rows[i] = { ...rows[i], ...updated };
+    //     }
+    //     return { rows };
+    //   });
+
+    this.setIsModalVisible(false);
+  };
 
   render() {
     return (
@@ -108,9 +182,9 @@ export class Example extends React.Component {
         <ReactDataGrid
           columns={columns}
           rowGetter={i => this.state.rows[i]}
-          rowsCount={30}
+          rowsCount={20}
           minHeight={650}
-          //onGridRowsUpdated={this.onGridRowsUpdated}
+          onGridRowsUpdated={this.onGridRowsUpdated}
           enableCellSelect={true}
           cellRangeSelection={{
             //onStart: e => console.log("onStart",e.topLeft ),
@@ -127,11 +201,21 @@ export class Example extends React.Component {
           }}
         />
 
-        <Modal title="Basic Modal"
+        <Modal title="Выбор контракта"
         visible={this.state.isModalVisible} 
-        onOk={this.handleOk} 
+        // onOk={this.handleOk} 
         onCancel={this.handleCancel}
+        footer={null}
         >
+          <Form
+          {...layout}
+          name="basic"
+          onFinish={this.onFinish}
+          >
+
+          <Form.Item
+            name="shortContract"
+          >
           <Select style={{ width: 470 }}>
             {this.state.contrItem.map(item => 
               {
@@ -140,6 +224,23 @@ export class Example extends React.Component {
                         </Select>
               })}
           </Select>
+          </Form.Item>
+
+          <Form.Item {...tailLayout}>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+
+          {/* <Select style={{ width: 470 }}>
+            {this.state.contrItem.map(item => 
+              {
+                return  <Select key={item.Id} value={item.ShortNameContract}>
+                          {item.ShortNameContract}
+                        </Select>
+              })}
+          </Select> */}
           {/* {console.log(this.state.args)} */}
           {/* <p>{this.state.args.bottomRight.toString()}</p> */}
         </Modal>
