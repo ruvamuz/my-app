@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import { Form, Input, Modal, Button, DatePicker, Select, message} from 'antd';
 import axios from 'axios';
 //import { render } from '@testing-library/react';
-//import moment from 'moment';
+import moment from 'moment';
 
 function AddEmployeeAntd(props){
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -17,6 +17,11 @@ function AddEmployeeAntd(props){
     const handleCancel = () => {
       setIsModalVisible(false);
     };
+
+    const disabledDate = (current) => {
+      let customDate = moment().format("YYYY-MM-DD");
+      return current && current >= moment(customDate, "YYYY-MM-DD");
+    }
 
     const onFinish = (values) => {
       //console.log('Success: - ', values);
@@ -67,6 +72,12 @@ function AddEmployeeAntd(props){
                   <Form.Item
                     label="Фамилия"
                     name="family"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Введите фамилию',
+                      },                     
+                    ]}
                   >
                     <Input />
                   </Form.Item>
@@ -74,6 +85,12 @@ function AddEmployeeAntd(props){
                   <Form.Item
                     label="Имя"
                     name="name"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Введите имя',
+                      },
+                    ]}
                   >
                     <Input/>
                   </Form.Item>
@@ -81,6 +98,12 @@ function AddEmployeeAntd(props){
                   <Form.Item
                     label="Отчество"
                     name="patronymic"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Введите отчество',
+                      },
+                    ]}
                   >
                     <Input/>
                   </Form.Item>
@@ -88,6 +111,12 @@ function AddEmployeeAntd(props){
                   <Form.Item
                     label="Должность"
                     name="jobPosition"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Введите должность',
+                      },
+                    ]}
                   >
                     <Select>
                       {jobPos.map(item => 
@@ -101,9 +130,17 @@ function AddEmployeeAntd(props){
                   <Form.Item
                     label="Дата рождения"
                     name="birthDate"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Введите дату рождения',
+                      },
+                    ]}
                   >
-                    <DatePicker/>
-                    {/* <Input/> */}
+                    <DatePicker
+                    format="YYYY-MM-DD"
+                    disabledDate={disabledDate}
+                    />
                   </Form.Item>
             
                   <Form.Item {...tailLayout}>

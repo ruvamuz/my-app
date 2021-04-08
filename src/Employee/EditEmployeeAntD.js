@@ -3,41 +3,74 @@ import { Modal, Button, Form, Input, Select, DatePicker, message} from 'antd';
 import moment from 'moment';
 import axios from 'axios';
 
-function EditEmployee(props) {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [jobPos, setJobPos] = useState([]);
-  const { Option } = Select;
-  const dateFormat = 'YYYY-MM-DD';
+const { Option } = Select;
+//const dateFormat = ;
 
-  const showModal = () => {
-    setIsModalVisible(true);
-    getJobPosition();
+class EditEmployee extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: this.props.item.Id,
+      family: this.props.item.Family,
+      name: this.props.item.Name,
+      patronymic: this.props.item.Patronymic,
+      jobPosition: this.props.item.JobPosition,
+      birthDate: this.props.item.BirthDate,
+      isModalVisible: false,
+      jobPos: [],
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputChange(event) {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({
+      [name]: value
+    });
+  }
+
+  setIsModalVisible = (value) =>{
+    this.setState({isModalVisible: value})
+  }
+
+  setJobPos = (value) =>{
+    this.setState({jobPos:value})
+  }
+
+  showModal = () => {
+    console.log(this.props.item)
+    this.setIsModalVisible(true);
+    this.getJobPosition();
+  };
+    
+  handleCancel = () => {
+    this.setIsModalVisible(false);
   };
 
-  const handleCancel = () => {
-    setIsModalVisible(false);
+  onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
   };
 
-  const getJobPosition = () => {
+  getJobPosition = () => {
     axios.get(process.env.REACT_APP_API+'jobposition')
       .then(res => {
-          //console.log(res.data);
-          //this.setState({jobPos: res.data});
-          setJobPos(res.data)
+          this.setJobPos(res.data)
       })
       .catch(error =>{console.log(error);})
     };
 
-  const onFinish = (values) => {
-    //console.log('Success:', values);
+  onFinish = (values) => {
+    //console.log('value.jobPosition :', values.jobPosition );
+    console.log('Success:', this.state);
     axios.put(process.env.REACT_APP_API+'employee',
     {
-      Id: values.id,
-      Family: values.family,
-      Name: values.name,
-      Patronymic: values.patronymic,
-      JobPosition: values.jobPosition ,
-      BirthDate: values.birthDate.format("YYYY-MM-DD"),
+      Id: this.state.id,
+      Family: this.state.family,
+      Name: this.state.name,
+      Patronymic: this.state.patronymic,
+      JobPosition: this.state.jobPosition,
+      BirthDate: this.state.birthDate, //.format("YYYY-MM-DD")
     })
     .then(response =>{
       message.info(response.data)
@@ -47,110 +80,114 @@ function EditEmployee(props) {
     })
     };
 
-    //const {item} = this.state;
-    return (
-      <div>
+    handleChangeJobPosition = (value) => {
+      this.setState({jobPosition: value})
+    }
 
-          {/* <Button type="primary" onClick={()=>console.log(props.item)}> */}
-          <Button type="primary" onClick={showModal}>
-          Редактировать
-          </Button>
+    // handleChangeBirthDate = (value) => {
+    //   if (value !== null) {
+    //     console.log("value.format(YYYY-MM-DD)",value._i);
+    //     this.setState({birthDate: value._i})
+    //   }
+      
+    //   console.log("this.state.birthDate",this.state.birthDate);
+    // }
 
-          <Modal title="Редактирование контракта" 
+
+    onChangeBirthDate = (date, dateString) => {
+      //console.log(dateString);
+      this.setState({birthDate: dateString})
+      //console.log("this.state.birthDate",this.state.birthDate);
+    }
+
+    disabledDate = (current) => {
+      let customDate = moment().format("YYYY-MM-DD");
+      return current && current >= moment(customDate, "YYYY-MM-DD");
+    }
+
+    render(){
+      return (
+        <div>
+            <Button type="primary" onClick={this.showModal}>
+            Редактировать
+            </Button>
+
+            <Modal title="Редактирование контракта" 
+              
+              footer={null}
+              visible={this.state.isModalVisible} 
+              onCancel={this.handleCancel}>
+              
+              <Form
+              {...layout}
+              name="basic"
+              onFinish={this.onFinish}
+              onFinishFailed={this.onFinishFailed}
+              >
+
+            <Form.Item label="Фамилия">
+              <Input 
+                name="family"
+                defaultValue={this.props.item.Family} 
+                onChange={this.handleInputChange}
+              />
+            </Form.Item>
+          
+            <Form.Item label="Имя">
+              <Input 
+                name="name"
+                defaultValue={this.props.item.Name} 
+                onChange={this.handleInputChange}
+              />
+            </Form.Item>
+          
+            <Form.Item label="Отчество">
+              <Input name="patronymic"
+                defaultValue={this.props.item.Patronymic} 
+                onChange={this.handleInputChange}
+              />
+            </Form.Item>
             
-            footer={null}
-            visible={isModalVisible} 
-            onCancel={handleCancel}>
-            
-            <Form
-            {...layout}
-            name="basic"
-            onFinish={onFinish}
-            //onSubmit={handleSubmit}
+            <Form.Item label="Должность"> 
+              <Select name="jobPosition" 
+                defaultValue={this.props.item.JobPosition1}
+                onChange={this.handleChangeJobPosition}
+              >
+                {this.state.jobPos.map(item => 
+                  {
+                    return  <Option key={item.Id} value={item.Id.toString()}>
+                              {item.JobPosition}
+                            </Option>
+                  })}
+              </Select>
+            </Form.Item>
+
+            <Form.Item label="Дата рождения"
+            rules={[
+              {
+                required: true,
+                message: 'Введите дату рождения',
+              },
+            ]}
             >
-        
-          <Form.Item
-            label="Id"
-            name="id"
-          >
+              <DatePicker name="birthDate" 
+              disabledDate={this.disabledDate}
+              defaultValue={moment(this.props.item.BirthDate, 'YYYY-MM-DD')}
+              onChange={this.onChangeBirthDate}
+              //onChange={this.handleChangeBirthDate}
+              />
+            </Form.Item>
           
-          <Input 
-            disabled={false}
-            defaultValue={props.item.Id}
-            //value={props.item.ContractId}
-            />
-          </Form.Item>
-
-          <Form.Item
-            label="Фамилия"
-            name="family"
-          >
-          <Input 
-            defaultValue={props.item.Family} 
-            //value={props.item.ShortNameContract}
-          />
-          </Form.Item>
-        
-          <Form.Item
-            label="Имя"
-            name="name"
-          >
-          <Input 
-          defaultValue={props.item.Name} 
-          //value={props.item.FullNameContract}
-          />
-          </Form.Item>
-        
-          <Form.Item
-            label="Отчество"
-            name="patronymic"
-          >
-          <Input 
-          defaultValue={props.item.Patronymic} 
-          //value={props.item.FullNameContract}
-          />
-          </Form.Item>
-          
-          <Form.Item
-            label="Должность"
-            name="jobPosition"
-          >
-            <Select defaultValue={props.item.JobPosition}>
-              {jobPos.map(item => 
-                {
-                  return  <Option key={item.Id} value={item.Id.toString()}>
-                            {item.JobPosition}
-                          </Option>
-                })}
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            label="Дата рождения"
-            name="birthDate"
-          >
-            <DatePicker defaultValue={moment(props.item.BirthDate,dateFormat)}/>
-          </Form.Item>
-            
-          {/* <Form.Item
-            label="FullNameContract"
-            name="fullNameContract"
-          >
-          <Input 
-          defaultValue={props.item.FullNameContract} 
-          //value={props.item.FullNameContract}
-          />
-          </Form.Item> */}
-        
-              <Form.Item {...tailLayout}>
-                <Button type="primary" htmlType="submit">
-                  Update Contract
-                </Button>
-              </Form.Item>
-            </Form>
-        </Modal>
-        </div>
-      );
+                <Form.Item {...tailLayout}>
+                  <Button type="primary" htmlType="submit">
+                    Update Contract
+                  </Button>
+                </Form.Item>
+              </Form>
+          </Modal>
+          </div>
+        );
+      }
   }
 
 const layout = {

@@ -48,6 +48,12 @@ function AddContractModalAntd(props){
             <Form.Item
               label="Короткое название"
               name="shortNameContract"
+              rules={[
+                {
+                  required: true,
+                  message: 'Введите короткое имя контракта',
+                },
+              ]}
             >
               <Input />
             </Form.Item>
@@ -55,6 +61,12 @@ function AddContractModalAntd(props){
             <Form.Item
               label="Полное название"
               name="fullNameContract"
+              rules={[
+                {
+                  required: true,
+                  message: 'Введите короткое имя контракта',
+                },
+              ]}
             >
               <Input/>
             </Form.Item>

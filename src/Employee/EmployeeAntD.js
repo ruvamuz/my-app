@@ -74,7 +74,7 @@ export class EmployeeAntD extends Component{
     { title: 'Имя', dataIndex: 'Name', key: 'Name',},
     { title: 'Отчество', dataIndex: 'Patronymic', key:'Patronymic',},
     // { title: 'Полное наименование',  dataIndex: 'FullNameContract',  key: 'FullNameContract', },
-    { title: 'Должность', dataIndex: 'JobPosition', key: 'JobPosition', },
+    { title: 'Должность', dataIndex: 'JobPosition1', key: 'JobPosition', },
     { title: 'Дата рождения', dataIndex: 'BirthDate', key: 'BirthDate' },
         
     // В данном месте формируется Столбец в котором хранятся кнопки Действий.
