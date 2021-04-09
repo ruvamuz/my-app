@@ -6,8 +6,8 @@ import "./styles.css";
 
 const columns = [
   { key: 'id', name: 'ID' },
-  { key: "time8", name: "8:00", editable: true },
-  { key: "time9", name: "9:00", editable: true },
+  { key: "time8",  name: "8:00" , editable: true },
+  { key: "time9",  name: "9:00" , editable: true },
   { key: "time10", name: "10:00", editable: true },
   { key: "time11", name: "11:00", editable: true },
   { key: "time12", name: "12:00", editable: true },
@@ -62,13 +62,22 @@ export class Example extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      update: "",
       rows,
       args:"",
       isModalVisible: false,
       contrItem:[],
     }
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
+  handleInputChange(event) {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({
+      [name]: value
+    });
+  }
   //state = { rows };
 
   setIsModalVisible(value){
@@ -104,21 +113,45 @@ export class Example extends React.Component {
   //   console.log("startCell",value.startCell.idx, "bottomRight", value.bottomRight.idx)
   // };
 
-  // onGridRowsUpdated = ({ fromRow, toRow, updated }) => {
-  //   this.setState(state => {
-  //     const rows = state.rows.slice();
-  //     for (let i = fromRow; i <= toRow; i++) {
-  //       rows[i] = { ...rows[i], ...updated };
-  //     }
-  //     return { rows };
-  //   });
-  // };
+  onGridRowsUpdated = ({cellKey, fromRow, toRow, updated }) => {
+    this.setState(state => {
+      const rows = this.state.rows.slice();
+      // rows.map(item =>{
+      //   if (item.key == fromRow){
+      //     this.setState({time14:updated})
+      //     console.log(item[cellKey])
+      //   }
+      // })
+      for (let i = fromRow; i <= toRow; i++) {
+          rows[i] = {...rows[i], ...updated };
+          console.log(cellKey)
+      }
+      return { rows };
+    });
+  };
 
   onFinish = (values) => {
     //var args = this.state.args;
     var topLeft = this.state.args.topLeft;
     var bottomRight = this.state.args.bottomRight;
-    var updated = values.shortContract;
+    var updateValue = values.shortContract;
+    for (let i = topLeft.idx; i<=bottomRight.idx; i++){
+      //var key = columns[i].key;
+      //console.log(key)
+      const inputUpdate ={
+        [columns[i].key] : updateValue
+      }
+
+      // var inputUpdate = new Object();
+      // inputUpdate.columns[i].key = updateValue
+
+      //{columns[i].key : updateValue}
+      console.log(inputUpdate)
+      //console.log(columns[i].key)
+      this.onGridRowsUpdated({cellKey:columns[i].key, fromRow: topLeft.rowIdx,toRow: topLeft.rowIdx,updated: inputUpdate})
+    }
+    
+    
     //console.log("startCell",this.state.args.startCell.idx, "bottomRight", this.state.args.bottomRight.idx)
     //this.onGridRowsUpdated(fromRow={startRow}, toRow={toRow}, updated={updateText});
 
@@ -142,14 +175,34 @@ export class Example extends React.Component {
     //     {console.log("hello")}
     // })
 
-    const keys = Object.keys(rows)
-    for (const key of keys) {
-      if (key == topLeft.rowIdx){
-        for (var i = topLeft.idx+1; i <=bottomRight.idx+1; i++){
-          console.log(`key = ${key}, value = ${Object.values(rows[key])[i]}`)
-        }
-      }
-    }
+      // this.setState(state => {
+      //   const rows = state.rows.slice();
+      //   for (let i = fromRow; i <= toRow; i++) {
+          
+      //     rows[i] = { ...rows[i], ...updated };
+      //   }
+      //   return { rows };
+      // });
+
+    // eslint-disable-next-line no-lone-blocks
+    // {this.state.rows.map(item => {
+    //             if (item.key == topLeft.rowIdx)
+    //               {
+    //                 console.log("row", this.state.rows[topLeft.rowIdx])
+    //                 console.log(Object.values(item))
+    //               }
+    //           }
+    // )}
+    
+
+    // const keys = Object.keys(rows)
+    // for (const key of keys) {
+    //   if (key == topLeft.rowIdx){
+    //     for (var i = topLeft.idx+1; i <=bottomRight.idx+1; i++){
+    //       console.log(`key = ${key}, value = ${Object.values(rows[key])[i]}`)
+    //     }
+    //   }
+    // }
 
     // this.setState(state => {
     //   const rows = state.rows.slice();
@@ -215,15 +268,21 @@ export class Example extends React.Component {
 
           <Form.Item
             name="shortContract"
-          >
-          <Select style={{ width: 470 }}>
-            {this.state.contrItem.map(item => 
+            rules={[
               {
-                return  <Select key={item.Id} value={item.ShortNameContract}>
-                          {item.ShortNameContract}
-                        </Select>
-              })}
-          </Select>
+                required: true,
+                message: 'Выберите контракт',
+              },                     
+            ]}
+          >
+            <Select style={{ width: 470 }}  >
+              {this.state.contrItem.map(item => 
+                {
+                  return  <Select key={item.Id} value={item.ShortNameContract}>
+                            {item.ShortNameContract}
+                          </Select>
+                })}
+            </Select>
           </Form.Item>
 
           <Form.Item {...tailLayout}>
