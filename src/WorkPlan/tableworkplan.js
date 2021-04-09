@@ -68,17 +68,7 @@ export class Example extends React.Component {
       isModalVisible: false,
       contrItem:[],
     }
-    this.handleInputChange = this.handleInputChange.bind(this);
   }
-
-  handleInputChange(event) {
-    const name = event.target.name;
-    const value = event.target.value;
-    this.setState({
-      [name]: value
-    });
-  }
-  //state = { rows };
 
   setIsModalVisible(value){
     this.setState({isModalVisible:value})
@@ -86,15 +76,10 @@ export class Example extends React.Component {
 
   showModal = (value) => {
     this.setState({args:value});
-    console.log("showModal: args", this.state.args)
+    //console.log("showModal: args", this.state.args)
     this.getContract();
     this.setIsModalVisible(true);
   };
-  
-  // handleOk = () => {
-  //   this.onGridRowsUpdated(this.state.args);
-  //   this.setIsModalVisible(false);
-  // };
 
   handleCancel = () => {
     this.setIsModalVisible(false);
@@ -104,24 +89,13 @@ export class Example extends React.Component {
     axios.get(process.env.REACT_APP_API+'contract')
       .then(res => {
           this.setState({contrItem: res.data});
-          //console.log(res.data)
       })
       .catch(error =>{console.log(error);})
     };
 
-  // onGridRowsUpdated = (value) => {
-  //   console.log("startCell",value.startCell.idx, "bottomRight", value.bottomRight.idx)
-  // };
-
   onGridRowsUpdated = ({cellKey, fromRow, toRow, updated }) => {
     this.setState(state => {
-      const rows = this.state.rows.slice();
-      // rows.map(item =>{
-      //   if (item.key == fromRow){
-      //     this.setState({time14:updated})
-      //     console.log(item[cellKey])
-      //   }
-      // })
+      const rows = state.rows.slice();
       for (let i = fromRow; i <= toRow; i++) {
           rows[i] = {...rows[i], ...updated };
           console.log(cellKey)
@@ -136,96 +110,9 @@ export class Example extends React.Component {
     var bottomRight = this.state.args.bottomRight;
     var updateValue = values.shortContract;
     for (let i = topLeft.idx; i<=bottomRight.idx; i++){
-      //var key = columns[i].key;
-      //console.log(key)
-      const inputUpdate ={
-        [columns[i].key] : updateValue
-      }
-
-      // var inputUpdate = new Object();
-      // inputUpdate.columns[i].key = updateValue
-
-      //{columns[i].key : updateValue}
-      console.log(inputUpdate)
-      //console.log(columns[i].key)
+      const inputUpdate ={[columns[i].key] : updateValue}
       this.onGridRowsUpdated({cellKey:columns[i].key, fromRow: topLeft.rowIdx,toRow: topLeft.rowIdx,updated: inputUpdate})
     }
-    
-    
-    //console.log("startCell",this.state.args.startCell.idx, "bottomRight", this.state.args.bottomRight.idx)
-    //this.onGridRowsUpdated(fromRow={startRow}, toRow={toRow}, updated={updateText});
-
-    // this.state.rows.map((row) =>{
-
-    //   return arr = (
-    //     row.id, 
-    //     row.time8, 
-    //     row.time9, 
-    //     row.time10, 
-    //     row.time11, 
-    //     row.time12, 
-    //     row.time13,
-    //     row.time14,
-    //     row.time15,
-    //     row.time16,
-    //     row.time17,
-    //     row.time18,
-    //     row.time19
-    //     );
-    //     {console.log("hello")}
-    // })
-
-      // this.setState(state => {
-      //   const rows = state.rows.slice();
-      //   for (let i = fromRow; i <= toRow; i++) {
-          
-      //     rows[i] = { ...rows[i], ...updated };
-      //   }
-      //   return { rows };
-      // });
-
-    // eslint-disable-next-line no-lone-blocks
-    // {this.state.rows.map(item => {
-    //             if (item.key == topLeft.rowIdx)
-    //               {
-    //                 console.log("row", this.state.rows[topLeft.rowIdx])
-    //                 console.log(Object.values(item))
-    //               }
-    //           }
-    // )}
-    
-
-    // const keys = Object.keys(rows)
-    // for (const key of keys) {
-    //   if (key == topLeft.rowIdx){
-    //     for (var i = topLeft.idx+1; i <=bottomRight.idx+1; i++){
-    //       console.log(`key = ${key}, value = ${Object.values(rows[key])[i]}`)
-    //     }
-    //   }
-    // }
-
-    // this.setState(state => {
-    //   const rows = state.rows.slice();
-    //     console.log(rows[topLeft.rowIdx].time8);
-    //   return { rows };
-    // });
-    
-    // onFinish = (values) => {
-    //   var fromRow = this.state.args.startCell.idx;
-    //   var toRow = this.state.args.bottomRight.idx;
-    //   var updated = values.shortContract;
-    //   //console.log("startCell",this.state.args.startCell.idx, "bottomRight", this.state.args.bottomRight.idx)
-    //   //this.onGridRowsUpdated(fromRow={startRow}, toRow={toRow}, updated={updateText});
-  
-    //   this.setState(state => {
-    //     const rows = state.rows.slice();
-    //     for (let i = fromRow; i <= toRow; i++) {
-          
-    //       rows[i] = { ...rows[i], ...updated };
-    //     }
-    //     return { rows };
-    //   });
-
     this.setIsModalVisible(false);
   };
 
@@ -240,68 +127,47 @@ export class Example extends React.Component {
           onGridRowsUpdated={this.onGridRowsUpdated}
           enableCellSelect={true}
           cellRangeSelection={{
-            //onStart: e => console.log("onStart",e.topLeft ),
-            //onUpdate: args => this.showModal(args),
-            
             onComplete: args => this.showModal(args)
-            
-            // onComplete: (args) => this.showModal(args)
-            // onComplete: args => console.log(
-            //   "onComplete: args.startCell", args.startCell,
-            //   "args.topLeft ", args.topLeft, 
-            //   "args.bottomRight:", args.bottomRight
-            //   )
           }}
         />
 
         <Modal title="Выбор контракта"
         visible={this.state.isModalVisible} 
-        // onOk={this.handleOk} 
         onCancel={this.handleCancel}
         footer={null}
         >
           <Form
-          {...layout}
-          name="basic"
-          onFinish={this.onFinish}
+            {...layout}
+            name="basic"
+            onFinish={this.onFinish}
           >
 
-          <Form.Item
-            name="shortContract"
-            rules={[
-              {
-                required: true,
-                message: 'Выберите контракт',
-              },                     
-            ]}
-          >
-            <Select style={{ width: 470 }}  >
-              {this.state.contrItem.map(item => 
+            <Form.Item
+              name="shortContract"
+              rules={[
                 {
-                  return  <Select key={item.Id} value={item.ShortNameContract}>
-                            {item.ShortNameContract}
-                          </Select>
-                })}
-            </Select>
-          </Form.Item>
+                  required: true,
+                  message: 'Выберите контракт',
+                },                     
+              ]}
+            >
+              <Select style={{ width: 470 }}  >
+                {this.state.contrItem.map(item => 
+                  {
+                    return  <Select key={item.Id} value={item.ShortNameContract}>
+                              {item.ShortNameContract}
+                            </Select>
+                  })}
+              </Select>
+            </Form.Item>
 
-          <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
+            <Form.Item {...tailLayout}>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
 
-          {/* <Select style={{ width: 470 }}>
-            {this.state.contrItem.map(item => 
-              {
-                return  <Select key={item.Id} value={item.ShortNameContract}>
-                          {item.ShortNameContract}
-                        </Select>
-              })}
-          </Select> */}
-          {/* {console.log(this.state.args)} */}
-          {/* <p>{this.state.args.bottomRight.toString()}</p> */}
+          </Form>
         </Modal>
       </div>
     );
