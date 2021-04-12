@@ -9,29 +9,52 @@ export class EmployeeAntD extends Component{
     //Конструктор объявляющий переменные для значении
     constructor(props){
         super(props);
-        this.state={deps:[], //переменная 
+        this.state={deps:[], //переменная всех значений таблицы
             jobPos:[], //переменная где хранится массив Должностей
             addModalShow: false, //переннная модального окна добавления значения в таблицу
-            editModalShow:false} //переннная модального окна редактирования значения в таблицу
+            editModalShow:false, //переннная модального окна редактирования значения в таблицу
+        } 
     }
 
+    setJobPos = (value) =>{
+        this.setState({jobPos:value})
+    }
 
     //Get json запрос на получение данных с таблицы Контрактов
     refreshList(){
         axios.get(process.env.REACT_APP_API+'employee')
         .then(res => {
-            this.setState({deps: res.data})
+            var row = [];
+            for (var item of res.data){
+                for(var j of this.state.jobPos){
+                    if (j.Id == item.JobPosition){
+                        item.JobPosition = j.JobPosition
+                    }
+                }                 
+                row.push(item)                
+            }
+            this.setState({deps: row})
         })
     }
+
+    getJobPosition = () => {
+        axios.get(process.env.REACT_APP_API+'jobposition')
+          .then(res => {
+              this.setJobPos(res.data)
+          })
+          .catch(error =>{console.log(error);})
+          //this.state.deps.map(item => item.JobPosition)
+        };
 
     //Запрос таблицы при монторовании элемента TableWork
     componentDidMount(){
         //this.getJobPosition();
-        //console.log(this.addModalShow)
+        //console.log("Монтирование")
+        this.getJobPosition();
         this.refreshList();
         this.timerID = setInterval(
             () => this.refreshList(),
-            1000
+            3000
         );
     }
 
@@ -74,7 +97,7 @@ export class EmployeeAntD extends Component{
     { title: 'Имя', dataIndex: 'Name', key: 'Name',},
     { title: 'Отчество', dataIndex: 'Patronymic', key:'Patronymic',},
     // { title: 'Полное наименование',  dataIndex: 'FullNameContract',  key: 'FullNameContract', },
-    { title: 'Должность', dataIndex: 'JobPosition1', key: 'JobPosition', },
+    { title: 'Должность', dataIndex: 'JobPosition', key: 'JobPosition', },
     { title: 'Дата рождения', dataIndex: 'BirthDate', key: 'BirthDate' },
         
     // В данном месте формируется Столбец в котором хранятся кнопки Действий.

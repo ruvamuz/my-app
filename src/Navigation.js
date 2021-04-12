@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import { Menu } from 'antd';
-import { HomeOutlined, AppstoreOutlined, UserOutlined, CalendarOutlined } from '@ant-design/icons';
+import { HomeOutlined, AppstoreOutlined, UserOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
 
 export class Navigation extends Component{
@@ -35,10 +35,10 @@ export class Navigation extends Component{
                     <Link to="/employee"/> {/* перенаправление на 2 Таблицу контрактов с AntD */}
                 </Menu.Item>
 
-                <Menu.Item icon={<UserOutlined/>}>
-                    WorkPlan
-                    <Link to="/workplan"/> {/* перенаправление на 2 Таблицу контрактов с AntD */}
-                </Menu.Item>
+                {/* <Menu.Item icon={<UserOutlined/>}> */}
+                    {/* WorkPlan */}
+                    {/* <Link to="/workplan"/> перенаправление на 2 Таблицу контрактов с AntD */}
+                {/* </Menu.Item> */}
                 
                 <Menu.Item icon={<UserOutlined/>}>
                     tableWorkPlan

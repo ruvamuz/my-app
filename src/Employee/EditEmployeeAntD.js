@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Modal, Button, Form, Input, Select, DatePicker, message} from 'antd';
 import moment from 'moment';
 import axios from 'axios';
@@ -150,7 +150,7 @@ class EditEmployee extends React.Component {
             
             <Form.Item label="Должность"> 
               <Select name="jobPosition" 
-                defaultValue={this.props.item.JobPosition1}
+                defaultValue={this.props.item.JobPosition}
                 onChange={this.handleChangeJobPosition}
               >
                 {this.state.jobPos.map(item => 

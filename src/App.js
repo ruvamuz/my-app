@@ -2,8 +2,7 @@ import './App.css';
 import {Home} from './Home.js'; // домашняя страница
 import {Navigation} from './Navigation';  //Компонент для навигации по приложению
 
-//Попытка добаления компонентов на AntD 
-import {CalendarWork} from './Calendar/Calendar'; // Стандартный компонент календаря 
+//компоненты на AntD 
 import {ContractAntD} from './Contract/ContractAntD'; // Таблица контрактов
 import {EmployeeAntD} from './Employee/EmployeeAntD'; // Таблица сотрудников
 import {WorkPlan} from './WorkPlan/WorkPlan' //Таблица план
