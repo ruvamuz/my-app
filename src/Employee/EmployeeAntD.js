@@ -27,7 +27,7 @@ export class EmployeeAntD extends Component{
             var row = [];
             for (var item of res.data){
                 for(var j of this.state.jobPos){
-                    if (j.Id == item.JobPosition){
+                    if (j.Id === item.JobPosition){
                         item.JobPosition = j.JobPosition
                     }
                 }                 
@@ -48,13 +48,11 @@ export class EmployeeAntD extends Component{
 
     //Запрос таблицы при монторовании элемента TableWork
     componentDidMount(){
-        //this.getJobPosition();
-        //console.log("Монтирование")
         this.getJobPosition();
         this.refreshList();
         this.timerID = setInterval(
             () => this.refreshList(),
-            3000
+            2000
         );
     }
 
@@ -119,8 +117,6 @@ export class EmployeeAntD extends Component{
             {/* выводим таблицу Контракта*/}
             <Table columns={columns} dataSource={deps} />
             <AddEmployeeAntd/>  
-            
-            {/* <Button onClick={alert(this.jobPos)}/>          */}
         </div>
         )
     }

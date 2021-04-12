@@ -61,8 +61,15 @@ class EditEmployee extends React.Component {
     };
 
   onFinish = (values) => {
-    //console.log('value.jobPosition :', values.jobPosition );
+    console.log('value.jobPosition :', values.jobPosition );
     console.log('Success:', this.state);
+    if (typeof(this.state.jobPosition)!= 'number'){
+      for(var j of this.state.jobPos){
+        if (j.JobPosition === this.state.jobPosition){
+          this.setState({jobPosition: j.Id})
+        }
+    }
+    }
     axios.put(process.env.REACT_APP_API+'employee',
     {
       Id: this.state.id,
@@ -81,23 +88,12 @@ class EditEmployee extends React.Component {
     };
 
     handleChangeJobPosition = (value) => {
+      console.log(value)
       this.setState({jobPosition: value})
     }
 
-    // handleChangeBirthDate = (value) => {
-    //   if (value !== null) {
-    //     console.log("value.format(YYYY-MM-DD)",value._i);
-    //     this.setState({birthDate: value._i})
-    //   }
-      
-    //   console.log("this.state.birthDate",this.state.birthDate);
-    // }
-
-
     onChangeBirthDate = (date, dateString) => {
-      //console.log(dateString);
       this.setState({birthDate: dateString})
-      //console.log("this.state.birthDate",this.state.birthDate);
     }
 
     disabledDate = (current) => {
