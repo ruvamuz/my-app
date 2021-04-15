@@ -137,7 +137,7 @@ class EditContract extends React.Component{
             
                   <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit">
-                      Update Contract
+                      Редактировать
                     </Button>
                   </Form.Item>
                 </Form>

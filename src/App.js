@@ -5,7 +5,7 @@ import {Navigation} from './Navigation';  //Компонент для навиг
 //компоненты на AntD 
 import {ContractAntD} from './Contract/ContractAntD'; // Таблица контрактов
 import {EmployeeAntD} from './Employee/EmployeeAntD'; // Таблица сотрудников
-import {WorkPlan} from './WorkPlan/WorkPlan' //Таблица план
+
 import {Example} from './WorkPlan/tableworkplan';
 
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
@@ -22,8 +22,6 @@ function App() {
 
           <Route path='/employee' component={EmployeeAntD}/> {/* перенаправление на Таблицу Сотрудников */}
         
-          <Route path='/workplan' component={WorkPlan}/> {/* перенаправление на 2 Таблицу контрактов с AntD */}
-
           <Route path='/tableworkplan' component={Example}/> {/* перенаправление на 2 Таблицу контрактов с AntD */}
         </Switch>
         </div>

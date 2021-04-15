@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import { Form, Input, Modal, Button, message } from 'antd';
 import axios from 'axios';
+import TextArea from 'antd/lib/input/TextArea';
 
 function AddContractModalAntd(props){
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -35,6 +36,7 @@ function AddContractModalAntd(props){
             </Button>
             
             <Modal title="Добавить контракт" 
+            width={700}
             footer={null}
             visible={isModalVisible} 
             onCancel={handleCancel}>
@@ -68,7 +70,7 @@ function AddContractModalAntd(props){
                 },
               ]}
             >
-              <Input/>
+              <TextArea autoSize={{ minRows: 2, maxRows: 5 }}/>
             </Form.Item>
             
             <Form.Item {...tailLayout}>
