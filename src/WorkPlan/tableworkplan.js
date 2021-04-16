@@ -10,18 +10,18 @@ import "./styles.css";
 const columns = [
   //{ key: 'id', name: 'ID' },
   { key: "date",  name: "Дата" },
-  { key: "time8",  name: "8:00" , editable: true },
-  { key: "time9",  name: "9:00" , editable: true },
-  { key: "time10", name: "10:00", editable: true },
-  { key: "time11", name: "11:00", editable: true },
-  { key: "time12", name: "12:00", editable: true },
-  { key: "time13", name: "13:00", editable: true },
-  { key: "time14", name: "14:00", editable: true },
-  { key: "time15", name: "15:00", editable: true },
-  { key: "time16", name: "16:00", editable: true },
-  { key: "time17", name: "17:00", editable: true },
-  { key: "time18", name: "18:00", editable: true },
-  { key: "time19", name: "19:00", editable: true },
+  { key: "8.00",  name: "8:00" , editable: true },
+  { key: "9.00",  name: "9:00" , editable: true },
+  { key: "10.00", name: "10:00", editable: true },
+  { key: "11.00", name: "11:00", editable: true },
+  { key: "12.00", name: "12:00", editable: true },
+  { key: "13.00", name: "13:00", editable: true },
+  { key: "14.00", name: "14:00", editable: true },
+  { key: "15.00", name: "15:00", editable: true },
+  { key: "16.00", name: "16:00", editable: true },
+  { key: "17.00", name: "17:00", editable: true },
+  { key: "18.00", name: "18:00", editable: true },
+  { key: "19.00", name: "19:00", editable: true },
 ];
 
 // const rows = [
@@ -112,15 +112,29 @@ export class Example extends React.Component {
   };
 
   updateData = (value, startDate, endDate) =>{
-    this.setState({rows2: value})
+    //this.setState({rows2: value})
     console.log(value)
     var startDateMS = Date.parse(startDate)
     var endDateMS = Date.parse(endDate)
-    console.log("startDateMS: ", startDateMS, "endDateMS: ", endDateMS)
+    //console.log("startDateMS: ", startDateMS, "endDateMS: ", endDateMS)
     this.setState({rows: []})
     for (let i=startDateMS; i <= endDateMS; i=i+24*60*60*1000){
       var date = new Date(i).toISOString().substr(0, 10)
-      const row = {Id:0, date:date, }
+      var obj = {};
+      value.map(item => {
+        if (item.DateWork === date) {
+          
+          for (let i=8; i<=19;i++){
+            var ident = i.toString().padStart(2,'0')+".00"
+            obj[ident] = 'Контракт' 
+          }
+
+          obj[item.StartTime.substr(0,5)] = '1'
+          console.log("Дата: ",date, "obj: ", obj)
+        }
+      })
+      const row = {Id:0, date:date }
+      Object.assign(row, obj)
       const newRow = [...this.state.rows, row]
       this.setState({rows: newRow})
     }
