@@ -10,8 +10,8 @@ import "./styles.css";
 const columns = [
   //{ key: 'id', name: 'ID' },
   { key: "date",  name: "Дата" },
-  { key: "8.00",  name: "8:00" , editable: true },
-  { key: "9.00",  name: "9:00" , editable: true },
+  { key: "08.00",  name: "8:00" , editable: true },
+  { key: "09.00",  name: "9:00" , editable: true },
   { key: "10.00", name: "10:00", editable: true },
   { key: "11.00", name: "11:00", editable: true },
   { key: "12.00", name: "12:00", editable: true },
@@ -65,6 +65,11 @@ export class Example extends React.Component {
     }
   }
 
+  componentDidMount(){
+    this.getContract();
+    console.log("contract", this.state.contrItem)
+  }
+
   setIsModalVisible(value){
     this.setState({isModalVisible:value})
   }
@@ -72,7 +77,7 @@ export class Example extends React.Component {
   showModal = (value) => {
     this.setState({args:value});
     //console.log("showModal: args", this.state.args)
-    this.getContract();
+    //this.getContract();
     this.setIsModalVisible(true);
   };
 
@@ -114,6 +119,7 @@ export class Example extends React.Component {
   updateData = (value, startDate, endDate) =>{
     //this.setState({rows2: value})
     console.log(value)
+    console.log("contract", this.state.contrItem)
     var startDateMS = Date.parse(startDate)
     var endDateMS = Date.parse(endDate)
     //console.log("startDateMS: ", startDateMS, "endDateMS: ", endDateMS)
@@ -121,22 +127,48 @@ export class Example extends React.Component {
     for (let i=startDateMS; i <= endDateMS; i=i+24*60*60*1000){
       var date = new Date(i).toISOString().substr(0, 10)
       var obj = {};
-      value.map(item => {
-        if (item.DateWork === date) {
-          
+      for (let i = 0; i < value.length; i++)
+      //value.map(item => 
+        {
+        //console.log(Object.keys(obj).length)
+        //Создание свойств часы
+        if (Object.keys(obj).length === 0){
           for (let i=8; i<=19;i++){
-            var ident = i.toString().padStart(2,'0')+".00"
-            obj[ident] = 'Контракт' 
+          var ident = i.toString().padStart(2,'0')+".00"
+          obj[ident] = ""
           }
-
-          obj[item.StartTime.substr(0,5)] = '1'
+        }
+        if (value[i].DateWork === date) {
+          var contract = "";
+          for (var variable in obj){
+            console.log(obj[variable]) 
+            if (variable === value[i].StartTime.substr(0,5).replace(":",".")){
+              for(var j of this.state.contrItem){
+                if (j.Id === value[i].Contract){
+                  contract = j.ShortNameContract
+                  //this.setState({jobPosition: j.Id})
+                }
+              }
+              //contract = "Id:"+value[i].Contract
+            }
+            if (obj[variable] === ""){
+              obj[variable] = contract
+            }
+            
+            if (variable === value[i].EndTime.substr(0,5).replace(":",".")){
+              contract = ""
+            }
+            console.log("variable", variable)
+          }
+          //obj[item.StartTime.substr(0,5).replace(":",".")] = 'Id:'+item.Contract
           console.log("Дата: ",date, "obj: ", obj)
         }
-      })
+      }
       const row = {Id:0, date:date }
       Object.assign(row, obj)
       const newRow = [...this.state.rows, row]
       this.setState({rows: newRow})
+      console.log(this.state.rows)
     }
   }
 
