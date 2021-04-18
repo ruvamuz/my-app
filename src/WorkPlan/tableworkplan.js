@@ -9,19 +9,19 @@ import "./styles.css";
 
 const columns = [
   //{ key: 'id', name: 'ID' },
-  { key: "date",  name: "Дата" },
-  { key: "08.00",  name: "8:00" , editable: true },
-  { key: "09.00",  name: "9:00" , editable: true },
-  { key: "10.00", name: "10:00", editable: true },
-  { key: "11.00", name: "11:00", editable: true },
-  { key: "12.00", name: "12:00", editable: true },
-  { key: "13.00", name: "13:00", editable: true },
-  { key: "14.00", name: "14:00", editable: true },
-  { key: "15.00", name: "15:00", editable: true },
-  { key: "16.00", name: "16:00", editable: true },
-  { key: "17.00", name: "17:00", editable: true },
-  { key: "18.00", name: "18:00", editable: true },
-  { key: "19.00", name: "19:00", editable: true },
+  { key: "Date",  name: "Дата" },
+  //{ key: "time08",  name: "8:00" , editable: true },
+  { key: "time09",  name: "9:00" , editable: true },
+  { key: "time10", name: "10:00", editable: true },
+  { key: "time11", name: "11:00", editable: true },
+  { key: "time12", name: "12:00", editable: true },
+  { key: "time13", name: "13:00", editable: true },
+  { key: "time14", name: "14:00", editable: true },
+  { key: "time15", name: "15:00", editable: true },
+  { key: "time16", name: "16:00", editable: true },
+  { key: "time17", name: "17:00", editable: true },
+  { key: "time18", name: "18:00", editable: true },
+  { key: "time19", name: "19:00", editable: true },
 ];
 
 // const rows = [
@@ -117,9 +117,6 @@ export class Example extends React.Component {
   };
 
   updateData = (value, startDate, endDate) =>{
-    //this.setState({rows2: value})
-    console.log(value)
-    console.log("contract", this.state.contrItem)
     var startDateMS = Date.parse(startDate)
     var endDateMS = Date.parse(endDate)
     //console.log("startDateMS: ", startDateMS, "endDateMS: ", endDateMS)
@@ -127,49 +124,33 @@ export class Example extends React.Component {
     for (let i=startDateMS; i <= endDateMS; i=i+24*60*60*1000){
       var date = new Date(i).toISOString().substr(0, 10)
       var obj = {};
-      for (let i = 0; i < value.length; i++)
-      //value.map(item => 
-        {
-        //console.log(Object.keys(obj).length)
-        //Создание свойств часы
-        if (Object.keys(obj).length === 0){
-          for (let i=8; i<=19;i++){
-          var ident = i.toString().padStart(2,'0')+".00"
-          obj[ident] = ""
-          }
-        }
-        if (value[i].DateWork === date) {
-          var contract = "";
-          for (var variable in obj){
-            console.log(obj[variable]) 
-            if (variable === value[i].StartTime.substr(0,5).replace(":",".")){
-              for(var j of this.state.contrItem){
-                if (j.Id === value[i].Contract){
-                  contract = j.ShortNameContract
-                  //this.setState({jobPosition: j.Id})
-                }
-              }
-              //contract = "Id:"+value[i].Contract
-            }
-            if (obj[variable] === ""){
-              obj[variable] = contract
-            }
-            
-            if (variable === value[i].EndTime.substr(0,5).replace(":",".")){
-              contract = ""
-            }
-            console.log("variable", variable)
-          }
-          //obj[item.StartTime.substr(0,5).replace(":",".")] = 'Id:'+item.Contract
-          console.log("Дата: ",date, "obj: ", obj)
+      if (Object.keys(obj).length === 0){
+        for (let i=8; i<=19;i++){
+        var ident = "time"+i.toString().padStart(2,'0')
+        obj[ident] = ""
         }
       }
-      const row = {Id:0, date:date }
+      for (let i = 0; i < value.length; i++)
+        {
+        if (value[i].Date === date) {
+          for (var item in value[i]){
+            for(var j of this.state.contrItem)
+            {
+              if (j.Id === value[i][item]){
+                value[i][item] = j.ShortNameContract
+              }
+            }
+            console.log(value[i][item])
+          }
+          obj = value[i]
+        }
+      }
+      const row = {Id:0, Date:date }
       Object.assign(row, obj)
       const newRow = [...this.state.rows, row]
       this.setState({rows: newRow})
-      console.log(this.state.rows)
     }
+    console.log(this.state.rows)
   }
 
   render() {
