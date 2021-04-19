@@ -55,7 +55,6 @@ export default class OptionsDrawer extends React.Component {
       )
       .then(res => this.props.updateData(res.data, startDate, endDate))
     }
-    //onClick={() => { this.props.updateData(this.state.name)}}
 
 
     handleChangeEmployee = (value) => {
@@ -134,6 +133,7 @@ export default class OptionsDrawer extends React.Component {
                 </Form.Item>
               
             </Form>
+            <Button type="primary" onClick={this.props.saveDataInDB}>Сохранить значения в БАЗУ</Button>
           </Drawer>
         </>
       );

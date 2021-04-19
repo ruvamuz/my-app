@@ -119,6 +119,7 @@ export class Example extends React.Component {
   updateData = (value, startDate, endDate) =>{
     var startDateMS = Date.parse(startDate)
     var endDateMS = Date.parse(endDate)
+    console.log("value: ",value)
     //console.log("startDateMS: ", startDateMS, "endDateMS: ", endDateMS)
     this.setState({rows: []})
     for (let i=startDateMS; i <= endDateMS; i=i+24*60*60*1000){
@@ -134,18 +135,20 @@ export class Example extends React.Component {
         {
         if (value[i].Date === date) {
           for (var item in value[i]){
+            if ((item === "Id") || (item === "Date") || (item === "Employee")) {continue}
             for(var j of this.state.contrItem)
             {
               if (j.Id === value[i][item]){
                 value[i][item] = j.ShortNameContract
+                break
               }
             }
-            console.log(value[i][item])
+            //console.log(value[i][item])
           }
           obj = value[i]
         }
       }
-      const row = {Id:0, Date:date }
+      const row = { Date:date, Employee:value[0].Employee }
       Object.assign(row, obj)
       const newRow = [...this.state.rows, row]
       this.setState({rows: newRow})
@@ -153,10 +156,62 @@ export class Example extends React.Component {
     console.log(this.state.rows)
   }
 
+  saveDataInDB = ()=>
+  {
+    //var newRow = {}//[...this.state.rows]
+    //console.log(newRow)
+    let RowSave = []
+    for (let i = 0; i < this.state.rows.length; i++){
+      var newRow = {}
+      for (var item in this.state.rows[i]){
+        if ((item === "Id") || (item === "Date") || (item === "Employee")) 
+        {
+          //console.log(this.state.rows[i].item)
+          newRow[item] = this.state.rows[i][item]
+          continue
+        }
+        if (this.state.rows[i][item] === "")
+        {
+          newRow[item] = ""
+          continue
+        }
+        for(var j of this.state.contrItem){
+              if (j.ShortNameContract === this.state.rows[i][item]){
+                newRow[item] = j.Id
+                break
+              } 
+            }
+      }
+      RowSave = [...RowSave, newRow]
+      console.log("row [",i,"] = ", RowSave)
+    }
+
+    // for (let i = 0; i < this.state.rows.length; i++)
+    //     {
+    //       var value ={}
+    //       for (var item in this.state.rows[i]){
+    //         if ((item === "Id") || (item === "Date") || (item === "Employee")) {continue}
+    //         for(var j of this.state.contrItem)
+    //         {
+    //           if (j.ShortNameContract === this.state.rows[i][item]){
+    //             value[item] = j.Id
+    //             break
+    //           }
+    //         }
+    //         //console.log(value[i][item])
+    //       }
+    //       console.log(value)
+    //   }
+    axios.put(process.env.REACT_APP_API+'workplan/', RowSave)
+    .then(response => console.log("response",response ))
+    .catch(error => console.log("error.response",error.response))
+    console.log("Сохранить значения в БАЗУ")
+  }
+
   render() {
     return (
       <div>
-          <OptionsDrawer updateData={this.updateData} />
+          <OptionsDrawer updateData={this.updateData} saveDataInDB={this.saveDataInDB} />
           <ReactDataGrid
           columns={columns}
           rowGetter={i => this.state.rows[i]}
