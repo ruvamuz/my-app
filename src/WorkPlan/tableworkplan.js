@@ -1,28 +1,9 @@
 import React from "react";
 import ReactDataGrid from "react-data-grid";
-import { Modal, Select, Form, Button, message } from 'antd';
-
+import { Modal, Select, Form, Button, message, Input } from 'antd';
 import OptionsDrawer from './optionsDrawer'
-
 import axios from 'axios';
 import "./styles.css";
-
-const columns = [
-  //{ key: 'id', name: 'ID' },
-  { key: "Date",  name: "Дата" },
-  //{ key: "time08",  name: "8:00" , editable: true },
-  { key: "time09",  name: "9:00" , editable: true },
-  { key: "time10", name: "10:00", editable: true },
-  { key: "time11", name: "11:00", editable: true },
-  { key: "time12", name: "12:00", editable: true },
-  { key: "time13", name: "13:00", editable: true },
-  { key: "time14", name: "14:00", editable: true },
-  { key: "time15", name: "15:00", editable: true },
-  { key: "time16", name: "16:00", editable: true },
-  { key: "time17", name: "17:00", editable: true },
-  { key: "time18", name: "18:00", editable: true },
-  { key: "time19", name: "19:00", editable: true },
-];
 
 const layout = {
   labelCol: {
@@ -40,6 +21,7 @@ const tailLayout = {
 };
 
 
+
 export class Example extends React.Component {
   constructor(props){
     super(props);
@@ -47,27 +29,64 @@ export class Example extends React.Component {
       update: "",
       rows:[],
       args:"",
-      isModalVisible: false,
+      isModalSelectContract: false,
+      isModalEditNote: false,
       contrItem:[],
+      oldValue: {},
+      columns: [
+        //{ key: 'id', name: 'ID' },
+        { key: "Date",  name: "Дата", width: 90 },
+        //{ key: "time08",  name: "8:00" , editable: true },
+        { key: "time09",  name: "9:00" , editable: true },
+        { key: "time10", name: "10:00", editable: true },
+        { key: "time11", name: "11:00", editable: true },
+        { key: "time12", name: "12:00", editable: true },
+        { key: "time13", name: "13:00", editable: true },
+        { key: "time14", name: "14:00", editable: true },
+        { key: "time15", name: "15:00", editable: true },
+        { key: "time16", name: "16:00", editable: true },
+        { key: "time17", name: "17:00", editable: true },
+        { key: "time18", name: "18:00", editable: true },
+        { key: "time19", name: "19:00", editable: true },
+        { key: "Note", name: "Примечания", editable: false, width: 105, events: {
+          onDoubleClick: 
+            () => this.setIsModalVisibleNote(true)
+          }
+        },
+      ]
     }
   }
+
+  const 
 
   componentDidMount(){
     this.getContract();
     console.log("contract", this.state.contrItem)
   }
 
-  setIsModalVisible(value){
-    this.setState({isModalVisible:value})
+  setIsModalVisibleContract(value){
+    this.setState({isModalSelectContract:value})
   }
 
-  showModal = (value) => {
-    this.setState({args:value});
-    this.setIsModalVisible(true);
+  setIsModalVisibleNote(value){
+    this.setState({isModalEditNote:value})
+  }
+
+  showModalSelectContract = (value) => {
+    console.log("value: ", value)
+    if ((value.topLeft.idx === -1) || (value.topLeft.idx === 12)) {return}
+    if (value.topLeft.idx === this.state.oldValue) 
+    {return}
+    else {
+      this.setState({oldValue:value.topLeft.idx})  
+      this.setState({args:value});
+      this.setIsModalVisibleContract(true);
+    }
   };
 
   handleCancel = () => {
-    this.setIsModalVisible(false);
+    this.setIsModalVisibleContract(false);
+    this.setIsModalVisibleNote(false);
   };
 
   getContract = () => {
@@ -95,11 +114,16 @@ export class Example extends React.Component {
     var bottomRight = this.state.args.bottomRight;
     var updateValue = values.shortContract;
     for (let i = topLeft.idx; i<=bottomRight.idx; i++){
-      const inputUpdate ={[columns[i].key] : updateValue}
-      this.onGridRowsUpdated({cellKey:columns[i].key, fromRow: topLeft.rowIdx,toRow: topLeft.rowIdx,updated: inputUpdate})
+      const inputUpdate ={[this.state.columns[i].key] : updateValue}
+      this.onGridRowsUpdated({cellKey:this.state.columns[i].key, fromRow: topLeft.rowIdx,toRow: topLeft.rowIdx,updated: inputUpdate})
     }
-    this.setIsModalVisible(false);
+    this.setIsModalVisibleContract(false);
   };
+
+  saveNote = (e) =>{
+    console.log(e)
+    console.log("Сохранить примечание")
+  }
 
   updateData = (value, startDate, endDate) =>{
     var startDateMS = Date.parse(startDate)
@@ -145,7 +169,7 @@ export class Example extends React.Component {
     for (let i = 0; i < this.state.rows.length; i++){
       var newRow = {}
       for (var item in this.state.rows[i]){
-        if ((item === "Id") || (item === "Date") || (item === "Employee")) 
+        if ((item === "Id") || (item === "Date") || (item === "Employee") || (item === "Note")) 
         {
           newRow[item] = this.state.rows[i][item]
           continue
@@ -175,7 +199,7 @@ export class Example extends React.Component {
       <div>
           <OptionsDrawer updateData={this.updateData} saveDataInDB={this.saveDataInDB} />
           <ReactDataGrid
-          columns={columns}
+          columns={this.state.columns}
           rowGetter={i => this.state.rows[i]}
           rowsCount={this.state.rows.length}
           minHeight={750}
@@ -183,13 +207,13 @@ export class Example extends React.Component {
           onGridRowsUpdated={this.onGridRowsUpdated}
           enableCellSelect={true}
           cellRangeSelection={{
-            onComplete: args => this.showModal(args)
+            onComplete: args => this.showModalSelectContract(args)
           }}
           />
         
 
         <Modal title="Выбор контракта"
-        visible={this.state.isModalVisible} 
+        visible={this.state.isModalSelectContract} 
         onCancel={this.handleCancel}
         footer={null}
         >
@@ -226,7 +250,35 @@ export class Example extends React.Component {
 
           </Form>
         </Modal>
+        
+        <Modal title="Примечания"
+        visible={this.state.isModalEditNote}
+        onCancel={this.handleCancel}
+        footer={null}
+        >
+          <Form
+            {...layout}
+            name="basic"
+            onFinish={this.saveNote}
+          >
+            <Form.Item
+              name="Note"
+            >
+              <Input.TextArea style={{ width: 1200 }} />
+              
+            </Form.Item>
+            
+            <Form.Item {...tailLayout}>
+              <Button type="primary" htmlType="submit" >
+                Добавить 
+              </Button>
+            </Form.Item>
+          </Form>
+
+        </Modal>
       </div>
     );
   }
 }
+
+//autoSize={{ minRows: 2, maxRows: 7 }}  maxLength="1000" 
