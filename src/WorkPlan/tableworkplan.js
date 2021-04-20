@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDataGrid from "react-data-grid";
-import { Modal, Select, Form, Button, } from 'antd';
+import { Modal, Select, Form, Button, message } from 'antd';
 
 import OptionsDrawer from './optionsDrawer'
 
@@ -23,19 +23,6 @@ const columns = [
   { key: "time18", name: "18:00", editable: true },
   { key: "time19", name: "19:00", editable: true },
 ];
-
-// const rows = [
-//   {id: 0, key:0, date:"", time8:"1", time9:"1", time10:"1", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", }, 
-//   {id: 1, key:1, date:"", time8:"2", time9:"2", time10:"2", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-//   {id: 2, key:2, date:"", time8:"3", time9:"3", time10:"3", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-//   {id: 3, key:3, date:"", time8:"4", time9:"4", time10:"4", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-//   {id: 4, key:4, date:"", time8:"5", time9:"5", time10:"5", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-//   {id: 5, key:5, date:"", time8:"6", time9:"6", time10:"6", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-//   {id: 6, key:6, date:"", time8:"7", time9:"7", time10:"7", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-//   {id: 7, key:7, date:"", time8:"8", time9:"8", time10:"8", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-//   {id: 8, key:8, date:"", time8:"9", time9:"9", time10:"9", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-//   {id: 9, key:9, date:"", time8:"5", time9:"5", time10:"5", time11:"", time12:"", time13:"", time14:"", time15:"", time16:"", time17:"", time18:"", time19:"", },
-// ];
 
 const layout = {
   labelCol: {
@@ -76,8 +63,6 @@ export class Example extends React.Component {
 
   showModal = (value) => {
     this.setState({args:value});
-    //console.log("showModal: args", this.state.args)
-    //this.getContract();
     this.setIsModalVisible(true);
   };
 
@@ -120,7 +105,6 @@ export class Example extends React.Component {
     var startDateMS = Date.parse(startDate)
     var endDateMS = Date.parse(endDate)
     console.log("value: ",value)
-    //console.log("startDateMS: ", startDateMS, "endDateMS: ", endDateMS)
     this.setState({rows: []})
     for (let i=startDateMS; i <= endDateMS; i=i+24*60*60*1000){
       var date = new Date(i).toISOString().substr(0, 10)
@@ -143,7 +127,6 @@ export class Example extends React.Component {
                 break
               }
             }
-            //console.log(value[i][item])
           }
           obj = value[i]
         }
@@ -158,15 +141,12 @@ export class Example extends React.Component {
 
   saveDataInDB = ()=>
   {
-    //var newRow = {}//[...this.state.rows]
-    //console.log(newRow)
     let RowSave = []
     for (let i = 0; i < this.state.rows.length; i++){
       var newRow = {}
       for (var item in this.state.rows[i]){
         if ((item === "Id") || (item === "Date") || (item === "Employee")) 
         {
-          //console.log(this.state.rows[i].item)
           newRow[item] = this.state.rows[i][item]
           continue
         }
@@ -185,27 +165,9 @@ export class Example extends React.Component {
       RowSave = [...RowSave, newRow]
       console.log("row [",i,"] = ", RowSave)
     }
-
-    // for (let i = 0; i < this.state.rows.length; i++)
-    //     {
-    //       var value ={}
-    //       for (var item in this.state.rows[i]){
-    //         if ((item === "Id") || (item === "Date") || (item === "Employee")) {continue}
-    //         for(var j of this.state.contrItem)
-    //         {
-    //           if (j.ShortNameContract === this.state.rows[i][item]){
-    //             value[item] = j.Id
-    //             break
-    //           }
-    //         }
-    //         //console.log(value[i][item])
-    //       }
-    //       console.log(value)
-    //   }
     axios.put(process.env.REACT_APP_API+'workplan/', RowSave)
-    .then(response => console.log("response",response ))
+    .then(res => message.info(res.data))
     .catch(error => console.log("error.response",error.response))
-    console.log("Сохранить значения в БАЗУ")
   }
 
   render() {

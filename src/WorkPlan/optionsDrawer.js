@@ -41,11 +41,8 @@ export default class OptionsDrawer extends React.Component {
     }
 
     onFinish = (values) => {
-      //console.log('startDate :', this.state.Date[0] );
       var startDate = this.state.Date[0];
-      //console.log('endDate :', this.state.Date[1] );
       var endDate = this.state.Date[1];
-      //console.log('employeeId:', this.state.SelectEmployeeId);
       var employeeId = this.state.SelectEmployeeId;
 
       axios.get(process.env.REACT_APP_API+'WorkPlan/'+
@@ -58,7 +55,6 @@ export default class OptionsDrawer extends React.Component {
 
 
     handleChangeEmployee = (value) => {
-      //console.log(value)
       this.setState({SelectEmployeeId: value})
     }
 
@@ -70,15 +66,12 @@ export default class OptionsDrawer extends React.Component {
     onChangeDate = (date, dateString) => {
       //Переменная date не используется но её нельзя убирать. 
       //Без нее не получите dateString в виде объекта из 2 дат
-      //console.log("date", date)
-      //console.log("dateString", dateString)
       this.setState({Date: dateString})
     }
   
     getEmployee(){
       axios.get(process.env.REACT_APP_API+'employee')
       .then(res => {
-          //console.log(res.data)
           this.setState({Employee: res.data})
       })
     }
@@ -91,7 +84,7 @@ export default class OptionsDrawer extends React.Component {
               Запрос календаря сотрудника
             </Button>
           <Drawer
-            title="Basic Drawer"
+            title="Календарь сотрудника"
             width="400"
             placement={placement}
             closable={false}
@@ -114,7 +107,7 @@ export default class OptionsDrawer extends React.Component {
               </Form.Item>
 
               <Form.Item label="Cотрудник:">
-                <Select value="Сотрудники" style={{ width: 200 }} 
+                <Select style={{ width: 200 }} 
                   defaultValue={this.state.SelectEmployee}
                   onChange={this.handleChangeEmployee}
                 >
