@@ -29,6 +29,8 @@ export class Example extends React.Component {
       update: "",
       rows:[],
       args:"",
+      //EditNoteRow: 1,
+      EditNote: "",
       isModalSelectContract: false,
       isModalEditNote: false,
       contrItem:[],
@@ -50,30 +52,33 @@ export class Example extends React.Component {
         { key: "time19", name: "19:00", editable: true },
         { key: "Note", name: "Примечания", editable: false, width: 105, events: {
           onDoubleClick: 
-            () => this.setIsModalVisibleNote(true)
+            (ev, args) => this.setIsModalVisibleNote(args, true), 
           }
         },
       ]
     }
   }
 
-  const 
-
   componentDidMount(){
     this.getContract();
-    console.log("contract", this.state.contrItem)
+    //console.log("contract", this.state.contrItem)
   }
 
   setIsModalVisibleContract(value){
     this.setState({isModalSelectContract:value})
   }
 
-  setIsModalVisibleNote(value){
-    this.setState({isModalEditNote:value})
+  setIsModalVisibleNote(args, value){
+    console.log("Open modal - rowIdx : ", args.rowIdx)
+    //if (typeof args.rowIdx === 'number' && !isNaN(args.rowIdx)){
+      //this.setState({EditNoteRow:args.rowIdx})
+      this.setState({EditNote: this.state.rows[args.rowIdx]})
+      this.setState({isModalEditNote:value})
+    //}
   }
 
   showModalSelectContract = (value) => {
-    console.log("value: ", value)
+    //console.log("value: ", value)
     if ((value.topLeft.idx === -1) || (value.topLeft.idx === 12)) {return}
     if (value.topLeft.idx === this.state.oldValue) 
     {return}
@@ -264,7 +269,14 @@ export class Example extends React.Component {
             <Form.Item
               name="Note"
             >
-              <Input.TextArea style={{ width: 1200 }} />
+              <Input.TextArea style={{ width: 1200 }} 
+              defaultValue={() => {
+                  if (this.state.EditNote.Note !== undefined){
+                    return this.state.EditNote.Note
+                  }
+                }
+              }
+              />
               
             </Form.Item>
             
@@ -280,5 +292,3 @@ export class Example extends React.Component {
     );
   }
 }
-
-//autoSize={{ minRows: 2, maxRows: 7 }}  maxLength="1000" 
