@@ -50,10 +50,11 @@ export class Example extends React.Component {
         { key: "time17", name: "17:00", editable: true },
         { key: "time18", name: "18:00", editable: true },
         { key: "time19", name: "19:00", editable: true },
-        { key: "Note", name: "Примечания", editable: false, width: 105, events: {
-          onDoubleClick: 
-            (ev, args) => this.setIsModalVisibleNote(args, true), 
-          }
+        { key: "Note", name: "Примечания", editable: false, width: 105, 
+        // events: {
+        //   onDoubleClick: 
+        //     (ev, args) => this.setIsModalVisibleNote(args, true), 
+        //   }
         },
       ]
     }
@@ -69,10 +70,11 @@ export class Example extends React.Component {
   }
 
   setIsModalVisibleNote(args, value){
-    console.log("Open modal - rowIdx : ", args.rowIdx)
     //if (typeof args.rowIdx === 'number' && !isNaN(args.rowIdx)){
       //this.setState({EditNoteRow:args.rowIdx})
-      this.setState({EditNote: this.state.rows[args.rowIdx]})
+      if ( args.topLeft === undefined) {return}
+      console.log("Open modal - rowIdx : ", args.topLeft.rowIdx)
+      this.setState({EditNote: this.state.rows[args.topLeft.rowIdx]})
       this.setState({isModalEditNote:value})
     //}
   }
@@ -212,7 +214,12 @@ export class Example extends React.Component {
           onGridRowsUpdated={this.onGridRowsUpdated}
           enableCellSelect={true}
           cellRangeSelection={{
-            onComplete: args => this.showModalSelectContract(args)
+            onComplete: args => { if (args.topLeft.idx === 12){
+                  this.setIsModalVisibleNote(args, true)
+                } else {
+                  this.showModalSelectContract(args)
+              }
+            }
           }}
           />
         
@@ -270,11 +277,10 @@ export class Example extends React.Component {
               name="Note"
             >
               <Input.TextArea style={{ width: 1200 }} 
-              defaultValue={() => {
-                  if (this.state.EditNote.Note !== undefined){
-                    return this.state.EditNote.Note
-                  }
-                }
+              defaultValue={this.state.EditNote.Note
+                  // if (this.state.EditNote.Note !== undefined){
+                  //   return this.state.EditNote.Note
+                  // }
               }
               />
               
